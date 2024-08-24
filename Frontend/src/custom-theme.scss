@@ -1,21 +1,42 @@
-
 @use '@angular/material' as mat;
 
 @include mat.core();
 
-$Frontend-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: mat.$azure-palette,
-    tertiary: mat.$blue-palette,
-  ),
-  density: (
-    scale: 0,
+$dark-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: mat.$azure-palette
+    )
   )
-));
+);
 
+$light-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+    )
+  )
+);
 
-:root {
-  @include mat.all-component-themes($Frontend-theme);
+html {
+  // Apply the dark theme by default
+  @include mat.all-component-themes($dark-theme);
+
+  .in-light-theme {
+    @include mat.all-component-colors($light-theme);
+  }
+  
 }
+
+html, body { 
+  height: 100%;
+  color: mat.get-theme-color($light-theme, surface);
+
+ .in-light-theme {
+    color: mat.get-theme-color($dark-theme, surface);
+  }
+}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 
