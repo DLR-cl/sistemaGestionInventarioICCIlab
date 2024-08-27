@@ -1,0 +1,23 @@
+<mat-toolbar>
+  <div class="nav-logo">
+    <p>Logo</p>
+  </div>
+  <div class="nav-container in-light-theme">
+    <mat-card class="nav-content">
+      <div class="nav-content-left">
+        <p>izqueirda</p>
+      </div>
+      <div class="nav-content-right">
+        <p>derecha</p>
+      </div>
+    </mat-card>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav opened mode="side" [style.width]="'14rem'">
+    <p>soy el side</p>
+  </mat-sidenav>
+    <mat-sidenav-content class="in-light-theme">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

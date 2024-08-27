@@ -1,0 +1,28 @@
+mat-toolbar {
+  height: 6rem;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+.nav-logo{
+  height: 100%;
+  width: 14rem;
+}
+.nav-container{
+  height: 100%;
+  flex-grow: 1;
+}
+
+.nav-content {
+  height: 98%;
+  border-radius: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 6rem);
+}
+

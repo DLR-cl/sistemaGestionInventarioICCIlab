@@ -26,8 +26,9 @@ html {
 
   .in-light-theme {
     @include mat.all-component-colors($light-theme);
+
   }
-  
+ 
 }
 
 html, body { 
@@ -36,6 +37,7 @@ html, body {
 
  .in-light-theme {
     color: mat.get-theme-color($dark-theme, surface);
+    background-color: mat.get-theme-color($light-theme, background);
   }
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
