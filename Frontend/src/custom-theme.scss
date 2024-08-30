@@ -39,6 +39,11 @@ html, body {
     color: mat.get-theme-color($dark-theme, surface);
     background-color: mat.get-theme-color($light-theme, background);
   }
+
+  .in-dark-theme {
+    color: mat.get-theme-color($light-theme, surface);
+    background-color: mat.get-theme-color($dark-theme, background);
+  }
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 

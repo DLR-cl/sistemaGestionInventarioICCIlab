@@ -1,0 +1,33 @@
+<mat-nav-list>
+  <a
+    mat-list-item
+    [routerLink]="'/admin/dashboard'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="selected-menu-item"
+    #dashboardRla="routerLinkActive"
+    [activated]="dashboardRla.isActive"
+  >
+    <mat-icon matListItemIcon>dashboard</mat-icon>
+    <span matListItemTitle>Home</span>
+  </a>
+  <a
+    mat-list-item
+    [routerLink]="'/admin/dashboard/content'"
+    routerLinkActive="selected-menu-item"
+    #contentRla="routerLinkActive"
+    [activated]="contentRla.isActive"
+  >
+    <mat-icon matListItemIcon>video_library</mat-icon>
+    <span matListItemTitle>Content</span>
+  </a>
+  <a
+    mat-list-item
+    [routerLink]="'/admin/dashboard/comments'"
+    routerLinkActive="selected-menu-item"
+    #commentsRla="routerLinkActive"
+    [activated]="commentsRla.isActive"
+  >
+    <mat-icon matListItemIcon>comment</mat-icon>
+    <span matListItemTitle>Comments</span>
+  </a>
+</mat-nav-list>
