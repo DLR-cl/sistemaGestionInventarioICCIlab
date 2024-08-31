@@ -1,11 +1,19 @@
 .sidenav-logo-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
-  min-width: 14rem;
 }
 
 .toolbar-container{
-  height: 100%;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  height: 98%;
+  flex-grow: 1;
+  box-shadow: 0px 1px 6px -3px rgba(0,0,0,0.75);
 }
 
 mat-toolbar {
@@ -15,18 +23,10 @@ mat-toolbar {
   padding: 0;
 }
 
-.nav-content {
-  height: 98%;
-  padding: 1rem;
-  border-radius: 0px;
-  display: flex;
-  flex-direction: row;
-  box-shadow: 0px 1px 6px -3px rgba(0,0,0,0.75);
-  justify-content: space-between;
-}
 .nav-content p{
   margin: 0;
 }	
+
 .nav-content-right{
   display: flex;
   flex-direction: row;
@@ -46,8 +46,8 @@ mat-toolbar {
   align-items: center;
 }
 
-.nav-content-right-content button{
-  margin-left: 0.5rem;
+mat-sidenav{
+  border-radius: 0px;
 }
 
 mat-sidenav-container {

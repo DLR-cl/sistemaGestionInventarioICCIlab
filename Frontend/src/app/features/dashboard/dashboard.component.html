@@ -1,33 +1,28 @@
-<mat-toolbar class="in-light-theme">
-  <div class="sidenav-logo-container in-dark-theme">
+<mat-toolbar [class]="modeDark()">
+  <div class="'sidenav-logo-container'" [style.width]="toolbarWidth()">
+    <h2>PañolLab</h2>
   </div>
   <div class="toolbar-container">
-    <mat-card class="nav-content">
       <div class="nav-content-left">
         <button mat-icon-button (click)="collapsed.set(!collapsed())"><mat-icon>menu</mat-icon></button>
       </div>
       <div class="nav-content-right">
         <div class="nav-content-right-image"></div>
         <div class="nav-content-right-content">
-          <p>John Dace</p>
+          <p>Super Admin1</p>
           <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>keyboard_arrow_down</mat-icon>
           </button>
           <mat-menu #menu="matMenu" class="in-light-theme">
-            <button mat-menu-item> Logout
-            </button>
-            <button mat-menu-item>
-              Perfil
-            </button>
+            <button mat-menu-item>Logout</button>
+            <button mat-menu-item>Perfil</button>
           </mat-menu>
         </div>
       </div>
-    </mat-card>
   </div>
 </mat-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav [opened]="collapsed()" mode="side" [style.width]="'14rem'">
-    <app-sidenav-ayudantes></app-sidenav-ayudantes>
+  <mat-sidenav [opened]="collapsed()" [mode]="modeSideNav()" [style.width]="'13rem'">
   </mat-sidenav>
   <mat-sidenav-content class="in-light-theme">
     <router-outlet></router-outlet>
