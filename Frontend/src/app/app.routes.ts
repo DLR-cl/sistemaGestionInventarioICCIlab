@@ -6,7 +6,6 @@ export enum RoutesEnum {
 }
 
 export const routes: Routes = [
-  
   {
     path: 'login', loadComponent: () => import('./core/auth/pages/login/login.component')
   },
