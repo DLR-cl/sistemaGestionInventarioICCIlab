@@ -1,0 +1,7 @@
+:host * {
+  border-radius: 0px !important;
+}
+.selected-menu-item{
+  border-left: 8px solid;
+  border-left-color : var(--primary-color);
+}

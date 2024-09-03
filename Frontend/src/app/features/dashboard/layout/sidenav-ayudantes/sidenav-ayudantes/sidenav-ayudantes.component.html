@@ -1,33 +1,53 @@
 <mat-nav-list>
   <a
     mat-list-item
-    [routerLink]="'/admin/dashboard'"
+    [routerLink]="''"
     [routerLinkActiveOptions]="{ exact: true }"
     routerLinkActive="selected-menu-item"
-    #dashboardRla="routerLinkActive"
-    [activated]="dashboardRla.isActive"
+    #inicioRla="routerLinkActive"
+    [activated]="inicioRla.isActive"
   >
     <mat-icon matListItemIcon>dashboard</mat-icon>
-    <span matListItemTitle>Home</span>
+    <span matListItemTitle>Inicio</span>
   </a>
   <a
     mat-list-item
-    [routerLink]="'/admin/dashboard/content'"
+    [routerLink]="'/gestion'"
     routerLinkActive="selected-menu-item"
-    #contentRla="routerLinkActive"
-    [activated]="contentRla.isActive"
+    #gestionRla="routerLinkActive"
+    [activated]="gestionRla.isActive"
   >
-    <mat-icon matListItemIcon>video_library</mat-icon>
-    <span matListItemTitle>Content</span>
+    <mat-icon matListItemIcon>cached</mat-icon>
+    <span matListItemTitle>Gestion</span>
   </a>
   <a
     mat-list-item
-    [routerLink]="'/admin/dashboard/comments'"
+    [routerLink]="'/inventario'"
     routerLinkActive="selected-menu-item"
-    #commentsRla="routerLinkActive"
-    [activated]="commentsRla.isActive"
+    #inventarioRla="routerLinkActive"
+    [activated]="inventarioRla.isActive"
   >
-    <mat-icon matListItemIcon>comment</mat-icon>
-    <span matListItemTitle>Comments</span>
+    <mat-icon matListItemIcon>inventory</mat-icon>
+    <span matListItemTitle>Inventario</span>
+  </a>
+  <a
+    mat-list-item
+    [routerLink]="'/advertencias'"
+    routerLinkActive="selected-menu-item"
+    #reportesRla="routerLinkActive"
+    [activated]="reportesRla.isActive"
+  >
+    <mat-icon matListItemIcon>report</mat-icon>
+    <span matListItemTitle>Advertencias</span>
+  </a>
+  <a
+    mat-list-item
+    [routerLink]="'/ayudantes'"
+    routerLinkActive="selected-menu-item"
+    #ayudantesRla="routerLinkActive"
+    [activated]="ayudantesRla.isActive"
+  >
+    <mat-icon matListItemIcon>supervisor_account</mat-icon>
+    <span matListItemTitle>Ayudantes</span>
   </a>
 </mat-nav-list>

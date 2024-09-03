@@ -8,11 +8,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { SidenavAyudantesComponent } from './layout/sidenav-ayudantes/sidenav-ayudantes/sidenav-ayudantes.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { NgOptimizedImage } from '@angular/common'
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
+    NgOptimizedImage,
     RouterOutlet,
     MatCardModule,
     MatToolbarModule,
@@ -25,60 +27,85 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export default class DashboardComponent{
+export default class DashboardComponent implements OnInit {
 
-  public collapsed = signal(true);
 
   public breakpointObserver = inject(BreakpointObserver);
 
+  public collapsed = signal(false);
   public isMobile = signal(false);
 
-  public modeSideNav = computed(() => {
-    if (this.isMobile()) {
-      return 'over';
-    }else {
-      return 'side';
-    }
-  })
+  public profilePicture = computed(() => {
+    return this.collapsed() ? '30px' : '100px';
+  });
 
-  public modeDark = computed(() => {
+  public sideNavWidth = computed(() => {
     if (this.isMobile()) {
-      return 'in-light-theme';
+      if(this.collapsed()){
+        return '0';
+      }else{
+        return '12rem';
+      }
     }else {
-      return 'in-dark-theme';
-    }
-  })
-
-  public toolbarWidth = computed(() => {
-    if (this.isMobile()) {
-      return '0rem';
-    }else {
-      return '13rem';
+      if(this.collapsed() ){
+        return '3.75rem';
+      }else{
+        return '14rem';
+      }
     }
   });
 
-  constructor(){
-    this.bkObserver();
+  public modeSideNav = computed(() => {
+    if (this.isMobile()) {
+      if(this.collapsed()){
+        return 'side';
+      }else{
+        return 'over';
+      }
+    }else {
+      return 'side'
+    }
+  })
+
+  public contentWidth = computed(() => {
+    if (this.isMobile()) {
+      return '0';
+    }else {
+      if(this.collapsed()){
+        return '3.75rem';
+      }else{
+        return '14rem';
+      }
+    }
+  });
+
+  ngOnInit(): void {
+    this.breakpointUpdate();
   }
 
-  bkObserver(){
-    this.breakpointObserver.observe([
+  breakpointUpdate(){
+    this.breakpointObserver
+    .observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
-      Breakpoints.Medium,
       Breakpoints.Large,
-      Breakpoints.XLarge
-    ]).subscribe(result => {
-      if (result.breakpoints[Breakpoints.XSmall]) {
+    ])
+    .subscribe((result) => {
+      if(result.breakpoints[Breakpoints.XSmall] ){
+        console.log('MOBILE');
+        this.collapsed.set(true);
         this.isMobile.set(true);
       }
-      if (result.breakpoints[Breakpoints.Small] 
-        || result.breakpoints[Breakpoints.Medium]
-        || result.breakpoints[Breakpoints.Large]
-        || result.breakpoints[Breakpoints.XLarge]
-      ) {
+      else if( result.breakpoints[Breakpoints.Large]){
+        console.log('PC');
+        this.collapsed.set(false);
         this.isMobile.set(false);
       }
+      else if( result.breakpoints[Breakpoints.Small]){
+        console.log('Tablet');
+        this.collapsed.set(true);
+        this.isMobile.set(true);
+      }
     });
-  }
+  };
 }

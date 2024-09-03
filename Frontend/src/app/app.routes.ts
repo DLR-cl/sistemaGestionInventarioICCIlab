@@ -6,15 +6,33 @@ export enum RoutesEnum {
 }
 
 export const routes: Routes = [
+  
+  {
+    path: 'login', loadComponent: () => import('./core/auth/pages/login/login.component')
+  },
+  {
+    path: 'register', loadComponent: () => import('./features/dashboard/dashboard.component')
+  },
   {
     path: '', loadComponent: () => import('./features/dashboard/dashboard.component'), 
     canActivate : [],//Guard Logeo
     children: [
       {
         path: '', 
+        canActivate : [],//Guard Ayudante
         children: [
           {
             path: '', loadComponent: () => import('./features/dashboard/pages/home/home.component')
+          },
+          
+          {
+            path: 'gestion', loadComponent: () => import('./features/gestion/gestion.component')
+          },
+          {
+            path: 'inventario', loadComponent: () => import('./features/inventario/inventario.component')
+          },
+          {
+            path: 'advertencias', loadComponent: () => import('./features/inventario/inventario.component')
           }
         ],
       },
@@ -22,17 +40,10 @@ export const routes: Routes = [
         path: '', canActivate : [],//Guard Admin
         children: [
           {
-            path: 'superadmin1', loadComponent: () => import('./features/dashboard/dashboard.component')
+            path: 'ayudantes', loadComponent: () => import('./features/inventario/inventario.component')
           }
         ],
       },
     ]
-  },
-  {
-    path: 'login', loadComponent: () => import('./features/dashboard/dashboard.component')
-  },
-  {
-    path: 'register', loadComponent: () => import('./features/dashboard/dashboard.component')
   }
-  
 ];
