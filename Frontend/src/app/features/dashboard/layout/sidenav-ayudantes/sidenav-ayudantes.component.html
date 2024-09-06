@@ -1,0 +1,34 @@
+<mat-nav-list>
+  @for (menuItem of menuItems; track menuItem) {
+    <a
+    mat-list-item
+    [routerLink]="menuItem.route"
+    [routerLinkActiveOptions]="{exact: true}"
+    routerLinkActive="selected-menu-item"
+    #rla="routerLinkActive"
+    [activated]="rla.isActive"
+    (click)="onLinkClick(menuItem.name)"
+    >
+    <mat-icon matListItemIcon>{{menuItem.icon}}</mat-icon>
+    <span matListItemTitle>{{menuItem.name}}</span>
+    </a>
+    <!-- @if(menuItem.subitems?.length && clickItem().display && clickItem().name === menuItem.name) {
+      <mat-nav-list>
+        @for (subitem of menuItem.subitems; track $index) {
+          <a
+          mat-list-item
+          class="subitem"
+          [routerLink]="subitem.route"
+          [routerLinkActiveOptions]="{exact: true}"
+          routerLinkActive="selected-menu-item"
+          #rla="routerLinkActive"
+          [activated]="rla.isActive"
+          >
+          <mat-icon matListItemIcon>{{subitem.icon}}</mat-icon>
+          <span matListItemTitle>{{subitem.name}}</span>
+          </a>
+        }
+      </mat-nav-list>
+    } -->
+  }
+</mat-nav-list>
