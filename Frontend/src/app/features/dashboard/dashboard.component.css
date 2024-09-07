@@ -10,7 +10,7 @@ mat-toolbar {
   display: flex;
   align-items: center;
   justify-content: flex-start; 
-  height: 3rem;
+  height: 4rem;
   position: relative;
 }
 
