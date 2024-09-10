@@ -13,13 +13,13 @@ interface MenuItem {
 
 
 @Component({
-  selector: 'app-sidenav-ayudantes',
+  selector: 'app-sidenav-admin',
   standalone: true,
   imports: [MatListModule, MatIconModule, RouterLink, RouterLinkActive],
-  templateUrl: './sidenav-ayudantes.component.html',
-  styleUrl: './sidenav-ayudantes.component.css'
+  templateUrl: './sidenav-admin.component.html',
+  styleUrl: './sidenav-admin.component.css'
 })
-export class SidenavAyudantesComponent {
+export class SidenavAdminComponent {
 
   public isMobile = input<boolean>();
 
@@ -32,7 +32,7 @@ export class SidenavAyudantesComponent {
       subitems: [
         { icon: 'add', route: 'add', name: 'Crear'},
       ]}, 
-    { icon: 'cached', route: '/gestion', name: 'Gestion'},
+    { icon: 'cached', route: '/prestamos', name: 'Prestamos',},
     { icon: 'inventory', route: '/inventario', name: 'Inventario',},
     { icon: 'report', route: '/advertencias', name: 'Advertencias',},
     { icon: 'supervisor_account', route: '/ayudantes', name: 'Ayudantes',},

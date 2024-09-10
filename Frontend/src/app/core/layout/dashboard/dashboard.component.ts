@@ -6,7 +6,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { SidenavAyudantesComponent } from './layout/sidenav-ayudantes/sidenav-ayudantes.component';
+import { SidenavAdminComponent } from '../sidenav/sidenav-admin/sidenav-admin.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { NgOptimizedImage } from '@angular/common'
 
@@ -22,7 +22,7 @@ import { NgOptimizedImage } from '@angular/common'
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    SidenavAyudantesComponent,
+    SidenavAdminComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
