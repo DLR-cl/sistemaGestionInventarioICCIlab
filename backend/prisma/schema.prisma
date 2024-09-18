@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String @unique
+
+  recursos Recursos[]
+}
+
+model Recursos {
+  icci_id Int @id
+  id_uta Int @unique
+  nombre String
+  estado Boolean
+  disponibilidad Boolean
+  modelo String
+  marca String
+  descripcion String
+  lugar String
+
+
+  category Category @relation(fields: [category_id], references: [id])
+  category_id Int
+  prestamos Prestamo[]
+}
+
+model Estudiante {
+  rut     String    @id
+  nombre  String
+  email   String    @unique
+  estado  Boolean @default(true)
+  prestamos Prestamo[]
+  penalizaciones Penalizacion[]
+}
+
+model Usuario {
+  id   Int    @id @default(autoincrement())
+  nombre String
+  tipo  UsuarioTipo
+  prestamo Prestamo[] // un usario realiza varios prestamos
+}
+
+
+model Prestamo {
+  id_prestamo Int     @id @default(autoincrement())
+  fecha_ini   DateTime
+  fecha_fin   DateTime
+  hora_ini    DateTime
+  hora_fin    DateTime
+  prestamo_tipo PrestamoTipo // regular o especial
+  estudiante  Estudiante @relation(fields: [estudiante_rut], references: [rut]) //asociado a un solo alumno
+  estudiante_rut String
+  recurso     Recursos @relation(fields: [recurso_icci_id], references: [icci_id]) // asociado a un solo recurso
+  recurso_icci_id Int
+  usuario Usuario @relation(fields: [usuario_id], references: [id]) // asociado a un usuario
+  usuario_id Int
+}
+
+model Penalizacion {
+  id             Int       @id @default(autoincrement())
+  estado         Boolean  @default(true)
+  grado          Int
+  fecha_ini   DateTime
+  fecha_fin   DateTime
+  comentario     String
+  estudiante     Estudiante @relation(fields: [estudiante_rut], references: [rut])
+  estudiante_rut String
+}
+
+enum PrestamoTipo {
+  Regular
+  Especial
+}
+
+enum UsuarioTipo {
+  Administrador
+  Ayudante
+}
