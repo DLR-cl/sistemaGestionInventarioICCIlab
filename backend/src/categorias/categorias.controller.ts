@@ -2,14 +2,16 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CategoriasService } from './categorias.service';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
+import { promises } from 'dns';
+import { ResponseDto } from 'src/recursos/dto/response.dto';
 
 @Controller('categorias')
 export class CategoriasController {
   constructor(private readonly categoriasService: CategoriasService) {}
 
   @Post()
-  create(@Body() createCategoriaDto: CreateCategoriaDto) {
-    return this.categoriasService.create(createCategoriaDto);
+  async create(@Body() createCategoria: CreateCategoriaDto) : Promise<ResponseDto<CreateCategoriaDto>> {
+    return await this.categoriasService.create(createCategoria)
   }
 
   @Get()

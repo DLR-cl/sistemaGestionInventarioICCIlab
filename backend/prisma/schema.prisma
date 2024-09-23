@@ -49,6 +49,8 @@ model Estudiante {
 model Usuario {
   id   Int    @id @default(autoincrement())
   nombre String
+  email String
+  password String
   estado Boolean
   tipo  UsuarioTipo
   prestamo Prestamo[] // un usario realiza varios prestamos
@@ -58,9 +60,9 @@ model Usuario {
 model Prestamo {
   id_prestamo Int     @id @default(autoincrement())
   fecha_ini   DateTime
-  fecha_fin   DateTime
+  fecha_fin   DateTime?
   hora_ini    DateTime
-  hora_fin    DateTime
+  hora_fin    DateTime?
   prestamo_tipo PrestamoTipo // regular o especial
   estudiante  Estudiante @relation(fields: [estudiante_rut], references: [rut]) //asociado a un solo alumno
   estudiante_rut String

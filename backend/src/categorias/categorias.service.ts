@@ -1,11 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
+import { DatabaseService } from 'src/database/database/database.service';
+import { ResponseDto } from './dto/response.dto';
 
 @Injectable()
 export class CategoriasService {
-  create(createCategoriaDto: CreateCategoriaDto) {
-    return 'This action adds a new categoria';
+
+  constructor(private readonly databaseService : DatabaseService){
+
+  }
+
+  async create(createCategoria: CreateCategoriaDto) : Promise<ResponseDto<CreateCategoriaDto>> {
+    try {
+      const nuevaCategoria = await this.databaseService.category.create({
+        data : createCategoria,
+      })
+
+      const response : ResponseDto<CreateCategoriaDto> = {
+        statusCode : HttpStatus.CREATED,
+        message : 'Categoria creada con exito',
+        data: createCategoria
+      }
+      return response
+    }catch(error){
+      throw new HttpException('Error al crear la categoria', HttpStatus.BAD_REQUEST)
+    } 
+
   }
 
   findAll() {
