@@ -87,7 +87,7 @@ export class PrestamosService {
 
   async terminarPrestamo(id : number){
     try {
-      const prestamoActivo  = this.databaseService.prestamo.findFirst({
+      const prestamoActivo  = this.databaseService.prestamo.findUnique({
         where : {
           id_prestamo: id,
           hora_fin : null,

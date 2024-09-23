@@ -19,7 +19,7 @@ export class PrestamosController {
 
   @Patch('/finalizar/:id')
   async finalizarPrestamo(@Param('id') id : string){
-    this.prestamosService.terminarPrestamo(+id);
+    return await this.prestamosService.terminarPrestamo(+id);
   }
   @Get(':id')
   findOne(@Param('id') id: string) {
