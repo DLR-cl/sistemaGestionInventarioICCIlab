@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,80 +7,120 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Category {
-  id   Int    @id @default(autoincrement())
-  name String @unique
-
-  recursos Recursos[]
-}
-
-model Recursos {
-  icci_id        Int     @id
-  id_uta         Int     @unique
-  nombre         String
-  estado         Boolean
-  disponibilidad Boolean
-  modelo         String
-  marca          String
-  descripcion    String
-  lugar          String
-
-  category    Category   @relation(fields: [category_id], references: [id])
-  category_id Int
-  prestamos   Prestamo[]
+model Categoria {
+  Id_categoria     Int       @id @default(autoincrement())
+  nombre_categoria String    @db.VarChar(50)
+  fecha_creacion   String    @db.VarChar(50)
+  Recurso          Recurso[]
 }
 
 model Estudiante {
-  rut            String         @id
-  nombre         String
-  email          String         @unique
-  estado         Boolean
-  prestamos      Prestamo[]
-  penalizaciones Penalizacion[]
+  rut               String      @id @db.VarChar(12)
+  p_nombre          String      @db.VarChar(30)
+  p_apellido        String      @db.VarChar(30)
+  m_apellido        String      @db.VarChar(30)
+  s_nombre          String      @db.VarChar(30)
+  correo            String      @db.VarChar(50)
+  direccion         String      @db.VarChar(60)
+  fono              String      @db.VarChar(9)
+  ingreso           Int
+  estado_estudiante String      @db.VarChar(9)
+  regular           regular[]
+  sanciones         sanciones[]
+}
+
+model Recurso {
+  id_recurso          Int                  @id @default(autoincrement())
+  Marca               String               @db.VarChar(50)
+  Descripcion         String               @db.VarChar(3000)
+  fecha_ingreso       DateTime             @db.Date
+  modelo              String               @db.VarChar(50)
+  Id_categoria        Int
+  Categoria           Categoria            @relation(fields: [Id_categoria], references: [Id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "Recurso_ibfk_1")
+  recursos_inventario recursos_inventario?
+
+  @@index([Id_categoria], map: "Id_categoria")
 }
 
 model Usuario {
-  id       Int         @id @default(autoincrement())
-  nombre   String
-  email    String
-  password String
-  estado   Boolean
-  tipo     UsuarioTipo
-  prestamo Prestamo[] // un usario realiza varios prestamos
+  id_usuario Int         @id @default(autoincrement())
+  nombre     String      @db.VarChar(30)
+  usuario    String      @db.VarChar(30)
+  apellido   String      @db.VarChar(30)
+  correo     String      @db.VarChar(50)
+  password   String      @db.VarChar(30)
+  rut        String      @db.VarChar(12)
+  admin      admin?
+  ayudante   ayudante?
+  sanciones  sanciones[]
 }
 
-model Prestamo {
-  id_prestamo     Int          @id @default(autoincrement())
-  fecha_ini       DateTime
-  fecha_fin       DateTime?
-  hora_ini        DateTime
-  hora_fin        DateTime?
-  prestamo_tipo   PrestamoTipo // regular o especial
-  estudiante      Estudiante   @relation(fields: [estudiante_rut], references: [rut]) //asociado a un solo alumno
-  estudiante_rut  String
-  recurso         Recursos     @relation(fields: [recurso_icci_id], references: [icci_id]) // asociado a un solo recurso
-  recurso_icci_id Int
-  usuario         Usuario      @relation(fields: [usuario_id], references: [id]) // asociado a un usuario
-  usuario_id      Int
+model admin {
+  id_usuario Int        @id
+  Usuario    Usuario    @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "admin_ibfk_1")
+  especial   especial[]
 }
 
-model Penalizacion {
-  id             Int        @id @default(autoincrement())
-  estado         Boolean    @default(true)
+model ayudante {
+  id_usuario Int       @id
+  Usuario    Usuario   @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "ayudante_ibfk_1")
+  regular    regular[]
+}
+
+model especial {
+  descripcion String   @db.VarChar(1000)
+  motivo      String   @db.VarChar(1000)
+  id_prestamo Int      @id
+  id_usuario  Int
+  prestamo    prestamo @relation(fields: [id_prestamo], references: [id_prestamo], onDelete: NoAction, onUpdate: NoAction, map: "especial_ibfk_1")
+  admin       admin    @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "especial_ibfk_2")
+
+  @@index([id_usuario], map: "id_usuario")
+}
+
+model prestamo {
+  id_prestamo         Int                 @id @default(autoincrement())
+  fecha_inicio        DateTime            @db.Date
+  fecha_fin           DateTime            @db.Date
+  id_recurso          Int
+  especial            especial?
+  recursos_inventario recursos_inventario @relation(fields: [id_recurso], references: [id_recurso], onDelete: NoAction, onUpdate: NoAction, map: "prestamo_ibfk_1")
+  regular             regular?
+
+  @@index([id_recurso], map: "id_recurso")
+}
+
+model recursos_inventario {
+  id_recurso   Int        @id
+  cont_recurso Int
+  prestamo     prestamo[]
+  Recurso      Recurso    @relation(fields: [id_recurso], references: [id_recurso], onDelete: NoAction, onUpdate: NoAction, map: "recursos_inventario_ibfk_1")
+}
+
+model regular {
+  hora_inicio String     @db.VarChar(6)
+  hora_fin    String     @db.VarChar(6)
+  id_prestamo Int        @id
+  rut         String     @db.VarChar(12)
+  id_usuario  Int
+  prestamo    prestamo   @relation(fields: [id_prestamo], references: [id_prestamo], onDelete: NoAction, onUpdate: NoAction, map: "regular_ibfk_1")
+  Estudiante  Estudiante @relation(fields: [rut], references: [rut], onDelete: NoAction, onUpdate: NoAction, map: "regular_ibfk_2")
+  ayudante    ayudante   @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "regular_ibfk_3")
+
+  @@index([id_usuario], map: "id_usuario")
+  @@index([rut], map: "rut")
+}
+
+model sanciones {
   grado          Int
-  fecha_ini      DateTime
-  fecha_fin      DateTime
-  comentario     String
-  estudiante     Estudiante @relation(fields: [estudiante_rut], references: [rut])
-  estudiante_rut String
-}
+  id_sanciones   Int        @id @default(autoincrement())
+  comentario     String     @db.VarChar(1000)
+  estado_sancion String     @db.VarChar(9)
+  id_usuario     Int
+  rut            String     @db.VarChar(12)
+  Usuario        Usuario    @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "sanciones_ibfk_1")
+  Estudiante     Estudiante @relation(fields: [rut], references: [rut], onDelete: NoAction, onUpdate: NoAction, map: "sanciones_ibfk_2")
 
-enum PrestamoTipo {
-  Regular
-  Especial
-}
-
-enum UsuarioTipo {
-  Administrador
-  Ayudante
+  @@index([id_usuario], map: "id_usuario")
+  @@index([rut], map: "rut")
 }
