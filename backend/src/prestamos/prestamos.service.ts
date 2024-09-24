@@ -14,14 +14,35 @@ export class PrestamosService {
 
   async create(createPrestamo: CreatePrestamoDto) {
     try {
-      console.log("no llegué");
+
+      const findRecurso = await this.databaseService.recursos.findUnique({
+        where : {
+          icci_id : createPrestamo.recurso_icci_id,
+        }
+      });
+
+      if(!findRecurso){
+        throw new HttpException('Recurso no existe en la base de datos', HttpStatus.BAD_REQUEST);
+      }
+
+      if (!findRecurso.disponibilidad) {
+        throw new HttpException('Recurso no disponible para préstamo', HttpStatus.BAD_REQUEST);
+      }
+
+      const inhabilitarRecurso = await this.databaseService.recursos.update({
+        where: {icci_id:findRecurso.icci_id},
+        data: {
+          disponibilidad : false,
+        }
+      });
+
       const nuevoPrestamo = await this.databaseService.prestamo.create(
         {
           data : createPrestamo
         }
       )
-      console.log("Hola");
 
+     
       const response : ResponseDto<CreatePrestamoDto> = {
         statusCode : HttpStatus.CREATED,
         message : 'Prestamo creado con exito',
@@ -37,8 +58,19 @@ export class PrestamosService {
     return await this.databaseService.prestamo.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} prestamo`;
+  async findOne(id: number) {
+    
+    try {
+      const prestamo = await this.databaseService.prestamo.findUnique({
+        where : {
+          id_prestamo : id,
+        }
+      });
+
+      return prestamo;
+    }catch (error){
+      throw new HttpException('Error al momento de obtener el prestamo', HttpStatus.BAD_REQUEST);
+    }
   }
 
   async findByUsuario(id_usuario : number) : Promise<Prestamo[]>{
@@ -71,15 +103,16 @@ export class PrestamosService {
     }
   }
 
-  async findPrestamosActivos(){
+  async findActivos() : Promise<Prestamo[]>{
     try {
-      const prestamosActivos  = this.databaseService.prestamo.findMany({
+      console.log('hola');
+      const prestamosActivos  = await this.databaseService.prestamo.findMany({
         where : {
           hora_fin : null,
         }
-      })
+      });
 
-      return prestamosActivos
+      return prestamosActivos ||  [];
     } catch(error){
       throw new HttpException('Error al obtener todos los prestamos activos', HttpStatus.BAD_REQUEST);
     }
@@ -87,7 +120,7 @@ export class PrestamosService {
 
   async terminarPrestamo(id : number){
     try {
-      const prestamoActivo  = this.databaseService.prestamo.findUnique({
+      const prestamoActivo  = await this.databaseService.prestamo.findUnique({
         where : {
           id_prestamo: id,
           hora_fin : null,
@@ -97,7 +130,17 @@ export class PrestamosService {
       if(!prestamoActivo){
         throw new HttpException('Prestamo no encontrado o ya ha sido entregado', HttpStatus.NOT_FOUND);
       }
+      
+      const habilitarRecurso = await this.databaseService.recursos.update({
+        where : {
+          icci_id : prestamoActivo.recurso_icci_id,
+        },
+        data: {
+          disponibilidad: true,
+        }
+      });
 
+      
       const prestamoTerminado = await this.databaseService.prestamo.update({
         where: {id_prestamo : id},
         data : {

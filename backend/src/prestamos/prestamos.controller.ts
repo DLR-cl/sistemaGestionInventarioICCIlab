@@ -21,9 +21,16 @@ export class PrestamosController {
   async finalizarPrestamo(@Param('id') id : string){
     return await this.prestamosService.terminarPrestamo(+id);
   }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.prestamosService.findOne(+id);
+  }
+
+  @Get('/estado/activo')
+  async findActivos() {
+    const prestamosActivos = await this.prestamosService.findActivos();
+    return prestamosActivos;
   }
 
   @Patch(':id')

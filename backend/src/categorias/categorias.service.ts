@@ -3,6 +3,7 @@ import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 import { DatabaseService } from 'src/database/database/database.service';
 import { ResponseDto } from './dto/response.dto';
+import { Categoria } from './entities/categoria.entity';
 
 @Injectable()
 export class CategoriasService {
@@ -29,19 +30,48 @@ export class CategoriasService {
 
   }
 
-  findAll() {
-    return `This action returns all categorias`;
+  async findAll() : Promise<Categoria[]>{
+    try {
+      return await this.databaseService.category.findMany();
+    } catch(error){
+      throw new HttpException('Error al mostrar las categorias', HttpStatus.BAD_REQUEST);
+    }
+    
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} categoria`;
+  async findOne(id: number) : Promise<Categoria> {
+    try{
+      return await this.databaseService.category.findUnique({
+        where : {
+          id : id,
+        }
+      })
+    } catch(error){
+      throw new HttpException('Error al mostrar la categoria', HttpStatus.BAD_REQUEST);
+    }
   }
 
   update(id: number, updateCategoriaDto: UpdateCategoriaDto) {
     return `This action updates a #${id} categoria`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} categoria`;
+  async remove(id: number) : Promise<Categoria>{
+    try {
+      const removeCategoria = await this.databaseService.category.delete({
+        where :{
+          id : id,
+        }
+      });
+
+      const response : ResponseDto<Categoria> = {
+        statusCode : HttpStatus.OK,
+        message: 'categoria borrada con exito',
+        data: removeCategoria,
+      };
+
+      return response;
+    } catch(error){
+      throw new HttpException('Error al borrar categoria', HttpStatus.BAD_REQUEST);
+    }
   }
 }

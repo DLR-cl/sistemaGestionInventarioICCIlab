@@ -5,6 +5,7 @@ import { DatabaseService } from 'src/database/database/database.service';
 import { Prisma } from '@prisma/client';
 import { ResponseDto } from './dto/response.dto';
 import { RecursoEntity } from './entities/recurso.entity';
+import { Prestamo } from 'src/prestamos/entities/prestamo.entity';
 @Injectable()
 export class RecursosService {
   constructor(private readonly databaseSercie : DatabaseService){}
@@ -76,5 +77,19 @@ export class RecursosService {
     throw new HttpException('Error, no se pudo borrar el recurso', HttpStatus.BAD_REQUEST)
   }
 
+  }
+
+  async todosPrestamosRecurso(id_recurso : number) : Promise<Prestamo[]>{
+    try {
+      const todosPrestamos = await this.databaseSercie.prestamo.findMany({
+        where:{
+          recurso_icci_id: id_recurso,
+        }
+      });
+
+      return todosPrestamos;
+    }catch(error){
+      throw new HttpException('Error al obtener todos los prestamos en los que aparece el recurso', HttpStatus.BAD_REQUEST);
+    }
   }
 }

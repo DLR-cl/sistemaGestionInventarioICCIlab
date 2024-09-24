@@ -21,6 +21,10 @@ export class RecursosController {
     return this.recursosService.findAll();
   }
 
+  @Get('/prestamos/:id')
+  async findAllRecursosEnPrestamo(@Param('id') id : string){
+    return await this.recursosService.todosPrestamosRecurso(+id);
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.recursosService.findOne(+id);
