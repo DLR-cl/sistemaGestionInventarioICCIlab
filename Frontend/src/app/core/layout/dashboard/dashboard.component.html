@@ -1,21 +1,21 @@
 <div>
-  <mat-toolbar>
+  <mat-toolbar >
     @if(!isMobile()){
       <div class="toolbar-logo" [style.width]="'14rem'">
         <img ngSrc="assets/logo-ing2.png" alt="no se econtro" fill priority>
       </div>
     }
-    <div class="toolbar-container" [class.in-light-theme]="!isMobile()">
+    <div class="toolbar-container" [class.in-light-theme]="!isMobile()" [class.toolbar-light]="!isMobile()">
       <div class="nav-content-left">
         <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
-        <p>Pañol</p><p [style.color]="'#5271FF'">LAB</p>
+        <p>Pañol</p><p class="title">LAB</p>
       </div>
       <div class="nav-content-right">
         @if(isMobile()){
           <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>person</mat-icon>
           </button>
-          <mat-menu #menu="matMenu" class="in-light-theme">
+          <mat-menu #menu="matMenu">
             <button mat-menu-item>Logout</button>
             <button mat-menu-item>Perfil</button>
           </mat-menu>
@@ -37,7 +37,9 @@
     <mat-sidenav #sidenav 
     [mode]="isMobile() ? 'over': 'side'" 
     [opened]="isMobile() ? 'false' : 'true'" 
-    [style.width]="isMobile() ? '12rem': '14rem'">
+    [style.width]="isMobile() ? '12rem': '14rem'"
+    class="mat-sidenav">
+    <div class="sidenav">
       <div class="sidenav-header">
         <img src="" alt="no se encontro">
         <div class="sidenav-header-text">
@@ -45,9 +47,16 @@
           <p>Ayudante</p>
         </div>
       </div>
-      <app-sidenav-admin [isMobile]="isMobile()" (toogleSidenav)="sidenav.toggle()"></app-sidenav-admin>
+      <div class="sidenav-links">
+        <app-sidenav-admin [isMobile]="isMobile()" (toogleSidenav)="sidenav.toggle()"></app-sidenav-admin>
+      </div>
+      <div class="sidenav-footer">
+        <p>&copy; 2024 Todos los derechos reservados</p>
+        <p>Creado por el grupo de proyecto 3</p>
+      </div>
+    </div>
     </mat-sidenav>
-    <mat-sidenav-content class="in-light-theme">
+    <mat-sidenav-content class="background-light">
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>

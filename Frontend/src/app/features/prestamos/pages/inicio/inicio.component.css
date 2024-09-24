@@ -1,9 +1,40 @@
-mat-card{
-  border-radius: 0px;
-}
 
 .categoria-container{
-  height: 100%;
-  width: 100%;
-  background-color: antiquewhite;
+  display: flex;
+  border-radius: 10px;
+  flex-direction: row;
+  align-items: center;
+  height: 99%;
+  width: 99%;
+  
+}
+
+.categoria-img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10rem;
+}
+
+.categoria-img mat-icon{
+  scale: 5;
+}
+
+.categoria-content{
+  display: flex;
+  gap: .5rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.categoria-content mat-card-title{
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+.categoria-content button{
+  border-radius: 8px;
+  min-width: 7rem;
 }

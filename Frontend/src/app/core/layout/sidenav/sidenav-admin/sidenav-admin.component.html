@@ -10,14 +10,18 @@
     (click)="onLinkClick(menuItem.name)"
     >
     <mat-icon matListItemIcon>{{menuItem.icon}}</mat-icon>
-    <span matListItemTitle>{{menuItem.name}}</span>
+    <div matListItemTitle>{{menuItem.name}}</div>
+    @if(menuItem.subitems?.length){
+      <div matListItemMeta class="display-sub-item"><mat-icon matListItemIcon>keyboard_arrow_down</mat-icon></div>
+    }
     </a>
-    <!-- @if(menuItem.subitems?.length && clickItem().display && clickItem().name === menuItem.name) {
-      <mat-nav-list>
+    @if(menuItem.subitems?.length && clickItem().display && clickItem().name === menuItem.name) {
+      <mat-nav-list class="subitem"
+      @expandMenu 
+      [style.padding]="'0'">
         @for (subitem of menuItem.subitems; track $index) {
           <a
           mat-list-item
-          class="subitem"
           [routerLink]="subitem.route"
           [routerLinkActiveOptions]="{exact: true}"
           routerLinkActive="selected-menu-item"
@@ -29,6 +33,6 @@
           </a>
         }
       </mat-nav-list>
-    } -->
+    }
   }
 </mat-nav-list>

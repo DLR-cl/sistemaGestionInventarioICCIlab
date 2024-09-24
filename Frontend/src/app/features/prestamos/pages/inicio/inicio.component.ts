@@ -1,53 +1,32 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { PrestamosService } from '../../prestamos.service';
-import { Categorias } from '../../prestamos.interface';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { CategoriasService } from '../../../inventario/services/categorias.service';
+import { Categoria } from '../../../inventario/interfaces/categoria.interface';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [MatCardModule, MatGridListModule, MatButtonModule],
+  imports: [MatCardModule, MatGridListModule, MatButtonModule, MatIconModule],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
 export default class InicioComponent implements OnInit {
 
-  private CATEGORIAS_DATA : Categorias[] = [ 
-    {
-      id: 1,
-      nombre: "Meta Quest",
-      descripcion: "descripcion 1"
-    },
-    {
-      id: 2,
-      nombre: "Computadores",
-      descripcion: "descripcion 2"
-    },
-    {
-      id: 3,
-      nombre: "Monitores",
-      descripcion: "descripcion 3"
-    },
-    {
-      id: 4,
-      nombre: "Teclados",
-      descripcion: "descripcion 4"
-    }
-  ]
-
-  public categorias = signal<Categorias[]>(this.CATEGORIAS_DATA);
-
+  public categorias = signal<Categoria[]>([]);
   private breakpointObserver = inject(BreakpointObserver);
   private router = inject(Router);
-
   public isMobile = signal(false);
+
+  public categoriasService = inject(CategoriasService);
 
   ngOnInit(): void {
     this.breakpointUpdate();
+    this.categorias.set(this.categoriasService.getCategorias());
   }
 
   private breakpointUpdate(){
@@ -55,7 +34,9 @@ export default class InicioComponent implements OnInit {
     .observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
+      Breakpoints.Medium,
       Breakpoints.Large,
+      Breakpoints.XLarge,
     ])
     .subscribe((result) => {
       if(result.breakpoints[Breakpoints.XSmall] ){
@@ -66,7 +47,15 @@ export default class InicioComponent implements OnInit {
         console.log('Tablet');
         this.isMobile.set(true);
 
+      }else if(result.breakpoints[Breakpoints.Medium]){
+        console.log('Tablet');
+        this.isMobile.set(true);
+        
       }else if(result.breakpoints[Breakpoints.Large]){
+        console.log('PC');
+        this.isMobile.set(false);
+      }
+      else if(result.breakpoints[Breakpoints.XLarge]){
         console.log('PC');
         this.isMobile.set(false);
       }
@@ -74,8 +63,8 @@ export default class InicioComponent implements OnInit {
   };
 
   onPrestar(categoria : string){
-
-    const categoriaFormat = categoria.replace(/\s/g, '-').toLowerCase();
-    this.router.navigate([`/prestamos/${categoria.toLocaleLowerCase()}`]);
+    this.router.navigate([`/prestamos/${categoria}`]);
   }
+
+ 
 }

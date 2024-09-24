@@ -28,13 +28,26 @@ export const routes: Routes = [
             path: 'prestamos/:categoria', loadComponent: () => import('./features/prestamos/pages/recursos/recursos.component')
           },
           {
+            path: 'prestamos/:categoria/:recurso', loadComponent: () => import('./features/prestamos/pages/gestion-prestamo/gestion-prestamo.component')
+          },
+          {
+            path: 'prestamos/:categoria/:recurso/:estudiante', loadComponent: () => import('./features/prestamos/pages/confirmar-prestamo/confirmar-prestamo.component')
+          },
+          {
             path: 'inventario', loadComponent: () => import('./features/inventario/inventario.component'),
-            children: [
-            ]
+          },
+          { 
+            path: 'inventario/recursos', loadComponent: () => import('./features/inventario/pages/recursos/recursos.component') 
+          },
+          { 
+            path: 'inventario/categorias', loadComponent: () => import('./features/inventario/pages/categorias/categorias.component') 
+          },
+          { 
+            path: 'ayudantes', loadComponent: () => import('./features/ayudantes/pages/ayudantes/ayudantes.component') 
           },
           {
             path: 'advertencias', loadComponent: () => import('./features/inventario/inventario.component')
-          }
+          },
         ],
       },
       {

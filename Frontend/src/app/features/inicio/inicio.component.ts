@@ -5,6 +5,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { LOAD_WASM, NgxScannerQrcodeComponent, NgxScannerQrcodeModule, ScannerQRCodeConfig, ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { MatButtonModule } from '@angular/material/button';
 import { BehaviorSubject } from 'rxjs';
+import { applyTheme, argbFromHex, hexFromArgb, themeFromSourceColor, TonalPalette } from '@material/material-color-utilities';
 
 LOAD_WASM().subscribe();
 
@@ -28,7 +29,6 @@ export default class HomeComponent implements OnInit {
     this.scannerData.subscribe(data => {
       console.log(data.length);
       if (data.length > 0) {
-        console.log('QR Code detected:', data[0].value);
         this.scanner.stop();
       }
     });

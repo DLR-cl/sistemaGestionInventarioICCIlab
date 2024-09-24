@@ -6,10 +6,21 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-a span{ 
-  font-family: 'QuickSand', sans-serif;
-  font-size: 16px;
+.subitem mat-icon{
+  margin-left: 40px;
 }
+
 .subitem{
-  margin-left: 20px;
+  height: auto;
+  transition: all 300ms; 
+}
+.display-sub-item{
+  margin: 0px !important;
+}
+
+.display{
+  height: 0;
+  transition: all 300ms; 
+  overflow: hidden;
+  display: none;
 }

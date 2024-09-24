@@ -1,0 +1,38 @@
+.gestion-container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.header-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  width: 1024px;
+}
+
+.cam-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0px;
+  height: 576px;
+  width: 1024px;
+}
+
+.ngx-scanner-qrcode{
+  width: 1024px !important;
+  height: 576px !important;
+}
+.origin-video{
+  width: 1024px !important;
+  height: 576px !important;
+}
+
+.hide{
+  display: none;
+}

@@ -44,7 +44,9 @@ export default class DashboardComponent implements OnInit{
     .observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
+      Breakpoints.Medium,
       Breakpoints.Large,
+      Breakpoints.XLarge,
     ])
     .subscribe((result) => {
       if(result.breakpoints[Breakpoints.XSmall] ){
@@ -54,9 +56,15 @@ export default class DashboardComponent implements OnInit{
       else if(result.breakpoints[Breakpoints.Small]){
         console.log('Tablet');
         this.isMobile.set(true);
-
-      }else if(result.breakpoints[Breakpoints.Large]){
+      }else if(result.breakpoints[Breakpoints.Medium]){
+        console.log('Medium');
+        this.isMobile.set(true);
+      } else if(result.breakpoints[Breakpoints.Large]){
         console.log('PC');
+        this.isMobile.set(false);
+      }
+      else if(result.breakpoints[Breakpoints.XLarge]){
+        console.log('Extra Large');
         this.isMobile.set(false);
       }
     });
