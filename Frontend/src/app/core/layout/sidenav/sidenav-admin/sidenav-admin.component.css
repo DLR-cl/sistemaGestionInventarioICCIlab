@@ -1,0 +1,26 @@
+:host * {
+  border-radius: 0px !important;
+}
+.selected-menu-item{
+  border-left: 8px solid;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.subitem mat-icon{
+  margin-left: 40px;
+}
+
+.subitem{
+  height: auto;
+  transition: all 300ms; 
+}
+.display-sub-item{
+  margin: 0px !important;
+}
+
+.display{
+  height: 0;
+  transition: all 300ms; 
+  overflow: hidden;
+  display: none;
+}
