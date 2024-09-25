@@ -1,9 +1,17 @@
+.gestion-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+
 .header-container{
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 2rem;
-  
+  width: 90%;
 }
 
 .header-container mat-card{
@@ -12,11 +20,15 @@
   align-items: center;
   justify-content: center;
   height: 75px;
+  width: 100%;
+}
+
+.grid-container{
   width: 90%;
 }
 
 .grid-container mat-grid-list{
-  width: 90% !important;
+  width: 100% !important;
 }
 
 .grid-container .img-estudiante{

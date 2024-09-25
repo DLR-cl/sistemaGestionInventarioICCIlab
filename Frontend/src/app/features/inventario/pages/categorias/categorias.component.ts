@@ -5,11 +5,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { CategoriasService } from '../../services/categorias.service';
 import { Categoria } from '../../interfaces/categoria.interface';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-categorias',
   standalone: true,
-  imports: [MatTableModule,MatButtonModule,MatIconModule, MatCardModule],
+  imports: [DatePipe,MatTableModule,MatButtonModule,MatIconModule, MatCardModule],
   templateUrl: './categorias.component.html',
   styleUrl: './categorias.component.css'
 })
@@ -19,7 +20,7 @@ export default class CategoriasComponent implements OnInit {
 
   public categoriasData = signal<Categoria[]>([])
 
-  public displayedColumns = ['categoria_id', 'nombre', 'icon','actions']
+  public displayedColumns = ['categoria_id', 'nombre', 'icon', 'fecha_creacion','actions']
 
   ngOnInit(): void {
     this.setCategoriasData()

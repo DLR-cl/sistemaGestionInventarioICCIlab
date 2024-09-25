@@ -29,15 +29,15 @@ export default class ConfirmarPrestamoComponent implements OnInit {
 
 
   public estudiante = signal<Estudiante>({ rut: 0, nombre: '', apellido: '', carrera: '' });
-  public recurso = signal<Recurso>({ icci_id: 0, nombre: '', categoria: '', estado: 'disponible',color: '' , marca: '', modelo: ''});
+  public recurso = signal<Recurso>({ recurso_id: 0, fecha_ingreso: new Date(), categoria: '', marca: '', modelo: '', estado: '', descripcion: '' });
   public isMobile = signal<boolean>(false);
 
   ngOnInit(): void {
     this.breakpointUpdate();
     this.setEstudianteById();
     this.setRecursoById();
-    console.log(this.recurso().icci_id);
-    if(this.estudiante().rut === 0 || this.recurso().icci_id === 0){
+    console.log(this.recurso().recurso_id);
+    if(this.estudiante().rut === 0 || this.recurso().recurso_id === 0){
       
       this.router.navigate(['/**']);
     }

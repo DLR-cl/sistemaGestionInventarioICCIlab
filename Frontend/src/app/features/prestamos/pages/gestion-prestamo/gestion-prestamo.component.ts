@@ -26,7 +26,7 @@ export default class GestionPrestamoComponent implements OnInit, OnDestroy {
   public hasCameraPermission = false; 
   public isPermissionChecked = false; 
 
-  public recurso = signal<Recurso>({ icci_id: 0, nombre: '', categoria: '', estado: 'disponible',color: '' , marca: '', modelo: ''});
+  public recurso = signal<Recurso>({ recurso_id: 0, fecha_ingreso: new Date(), categoria: '', marca: '', modelo: '', estado: '', descripcion: '' });
 
   public config: ScannerQRCodeConfig = {
     isBeep: false,
@@ -44,7 +44,7 @@ export default class GestionPrestamoComponent implements OnInit, OnDestroy {
     this.checkCameraAccess();
     
     this.setRecursoById();
-    if(this.recurso().icci_id === 0){
+    if(this.recurso().recurso_id === 0){
       this.router.navigate(['/**']);
     }
   }

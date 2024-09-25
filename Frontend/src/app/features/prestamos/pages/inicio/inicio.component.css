@@ -3,6 +3,7 @@
   display: flex;
   border-radius: 10px;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
   height: 99%;
   width: 99%;
@@ -13,28 +14,38 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 10rem;
+  margin-left: 20px;
+  width: 40%;
 }
 
 .categoria-img mat-icon{
-  scale: 5;
+  scale: 4;
 }
 
 .categoria-content{
   display: flex;
-  gap: .5rem;
+  gap: 8px;
   flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  flex-grow: 1;
+  width: 60%;
+  padding: 8px;
+  height: 100%;
+  box-sizing: border-box;
+  
 }
 
 .categoria-content mat-card-title{
+  min-width:100px;
+  text-align: center;
   font-weight: 500;
   font-size: 1.25rem;
 }
 
 .categoria-content button{
   border-radius: 8px;
-  min-width: 7rem;
+  width: 5rem;
+  flex-shrink: 0;
+  min-width: 4rem;
 }

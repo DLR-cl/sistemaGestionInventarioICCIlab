@@ -1,9 +1,9 @@
 export interface Recurso {
-  icci_id: number;
-  nombre: string;
+  recurso_id: number;
+  fecha_ingreso: Date;
   categoria: string;
   marca: string;
   modelo: string;
-  color: string;
   estado: string;
+  descripcion: string;
 }

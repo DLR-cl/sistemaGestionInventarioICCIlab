@@ -87,6 +87,11 @@ html, body {
     }
   }
 
+  .dialog-container {
+    @include mat.dialog-color($dark-theme);
+    color: mat.get-theme-color($dark-theme, primary);
+  }
+
   .btn-view {
     @include mat.icon-button-color($cyan-theme, $color-variant: primary);
   }
