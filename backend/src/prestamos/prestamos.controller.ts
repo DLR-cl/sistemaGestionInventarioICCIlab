@@ -19,7 +19,7 @@ export class PrestamosController {
 
   @Patch('/finalizar/:id')
   async finalizarPrestamo(@Param('id') id : string){
-    return await this.prestamosService.terminarPrestamo(+id);
+    return await this.prestamosService.finalizarPrestamo(+id);
   }
 
   @Get(':id')
@@ -27,11 +27,7 @@ export class PrestamosController {
     return this.prestamosService.findOne(+id);
   }
 
-  @Get('/estado/activo')
-  async findActivos() {
-    const prestamosActivos = await this.prestamosService.findActivos();
-    return prestamosActivos;
-  }
+
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePrestamoDto: UpdatePrestamoDto) {

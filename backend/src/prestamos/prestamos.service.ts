@@ -3,7 +3,7 @@ import { CreatePrestamoDto } from './dto/create-prestamo.dto';
 import { UpdatePrestamoDto } from './dto/update-prestamo.dto';
 import { DatabaseService } from 'src/database/database/database.service';
 import { ResponseDto } from './dto/response.dto';
-import { prestamo } from '@prisma/client';
+import { prestamo, recursos_inventario } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { UpdateRecursoDto } from 'src/recursos/dto/update-recurso.dto';
 
@@ -15,42 +15,25 @@ export class PrestamosService {
   async create(createPrestamo: CreatePrestamoDto) {
     try {
 
-      // encontrar que recurso existe
-      const findRecurso = await this.databaseService.recursos_inventario.findUnique({
-        where : {
-           id_recurso : createPrestamo.id_recurso,
-        }
-      });
-
-
-
-      if(!findRecurso){
-        throw new HttpException('Recurso no existe en la base de datos', HttpStatus.BAD_REQUEST);
-      }else if(findRecurso.cont_recurso == 0){
-        throw new HttpException('No hay más recursos de este tipo ', HttpStatus.NOT_ACCEPTABLE);
-      }
-
-      // actualizar cantidad de recursos
-      this.databaseService.recursos_inventario.update({
-        where : {
-          id_recurso : createPrestamo.id_recurso,
-        },
-        data : {
-          cont_recurso : findRecurso.cont_recurso - 1,
-        }
-      })
-      
+      // al crear el recurso se crea el prestamo generico  y se actualiza el estado del recurso
 
       const nuevoPrestamo = await this.databaseService.prestamo.create(
         {
           data : {
-            fecha_fin : createPrestamo.fecha_fin,
-            fecha_inicio : createPrestamo.fecha_ini,
+            fecha_inicio : new Date(),
             id_recurso : createPrestamo.id_recurso,
           }
         }
       )
+      // actualizar estado del recuro
+      const actualizarEstado = await this.databaseService.recursos_inventario.update({
+        where : {id_recurso : createPrestamo.id_recurso},
+        data : {
+          estado_recurso : 0,
+        }
+      });
 
+    
      
       const response : ResponseDto<CreatePrestamoDto> = {
         statusCode : HttpStatus.CREATED,
@@ -82,7 +65,53 @@ export class PrestamosService {
     }
   }
 
+  async finalizarPrestamo(id_prestam : number) {
+    try {
+      console.log('check')
+      const finalizarPrestamo = await this.databaseService.prestamo.update({
+        where : {id_prestamo : id_prestam},
+        data : {fecha_fin : new Date()}
+      });
+      console.log('check 2')
 
+      const cambiarEstadoRecurso = await this.databaseService.recursos_inventario.update({
+        where: {
+          id_recurso : finalizarPrestamo.id_recurso
+        },
+        data : {
+          estado_recurso : 1,
+        }
+      });
+      console.log('check 3')
+
+      // encontrar 
+      const findRegular = await this.databaseService.regular.findUnique({
+        where : {id_prestamo : id_prestam}
+      });
+      console.log('check4')
+
+      if(findRegular){
+        const changeState = await this.databaseService.regular.update({
+          where :{
+            id_prestamo : id_prestam,
+          },
+          data : {
+            hora_fin : '11:25'
+          }
+        });
+      }
+      console.log('check5 ')
+
+      const response : ResponseDto<recursos_inventario> = {
+        statusCode : HttpStatus.OK,
+        message : 'Recurso devuelto con exito',
+        data : cambiarEstadoRecurso
+      };
+      return response;
+    }catch(error){
+      throw new HttpException('Error al finalizar un prestamo', HttpStatus.BAD_REQUEST);
+    }
+  }
 
 
   // async findActivos() : Promise<prestamo[]>{

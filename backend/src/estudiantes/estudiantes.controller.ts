@@ -19,7 +19,7 @@ export class EstudiantesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.estudiantesService.findOne(+id);
+    return this.estudiantesService.findOne(id);
   }
 
   @Patch(':id')

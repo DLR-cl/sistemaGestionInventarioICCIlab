@@ -17,7 +17,10 @@ export class CategoriasService {
     try {
       
       const newcategoria = await this.databaseService.categoria.create({
-        data : createCategoria,
+        data : {
+          fecha_creacion : createCategoria.fecha_creacion,
+          nombre_categoria : createCategoria.nombre_categoria
+        },
       })
 
       const response : ResponseDto<categoria> = {
@@ -45,7 +48,7 @@ export class CategoriasService {
     try{
       return await this.databaseService.categoria.findUnique({
         where : {
-          Id_categoria: id,
+          id_categoria: id,
         }
       })
     } catch(error){
@@ -58,7 +61,7 @@ export class CategoriasService {
     try {
       const findCategoria = await this.databaseService.categoria.findUnique({
         where : {
-          Id_categoria : id,
+          id_categoria : id,
         }
       });
 
@@ -67,7 +70,7 @@ export class CategoriasService {
       };
 
       const newCategoria = await this.databaseService.categoria.update({
-        where : {Id_categoria : id},
+        where : {id_categoria : id},
         data : updateCategoria,
       });
 
@@ -87,7 +90,7 @@ export class CategoriasService {
     try {
       const removeCategoria = await this.databaseService.categoria.delete({
         where :{
-          Id_categoria : id,
+          id_categoria : id,
         }
       });
 

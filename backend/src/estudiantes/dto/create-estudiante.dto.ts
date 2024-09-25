@@ -1,4 +1,4 @@
-import { IsBoolean, IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsBoolean, IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateEstudianteDto {
     
@@ -7,14 +7,39 @@ export class CreateEstudianteDto {
     rut : string
     
     @IsString()
-    @IsNotEmpty()
-    nombre : string
+    @IsOptional()
+    p_nombre : string
     
-    @IsEmail()
+    @IsString()
+    @IsOptional()
+    p_apellido : string
+  
+    @IsString()
+    @IsOptional()
+    m_apellido : string
+
+    @IsString()
+    @IsOptional()
+    s_nombre : string
+
+    @IsString()
     @IsNotEmpty()
-    email : string
+    direccion : string;
     
-    @IsBoolean()
-    @IsNotEmpty()
-    estado : boolean
+    @IsString()
+    @IsOptional()
+    fono : string;
+    
+    @IsNumber()
+    @IsOptional()
+    ingreso : number;
+
+
+    @IsString()
+    @IsOptional()
+    correo : string
+    
+    @IsString()
+    @IsOptional()
+    estado_estudiante : string;
 }

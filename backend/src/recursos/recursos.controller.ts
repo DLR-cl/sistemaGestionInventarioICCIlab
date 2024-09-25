@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { RecursosService } from './recursos.service';
 import { CreateRecursoDto } from './dto/create-recurso.dto';
 import { UpdateRecursoDto } from './dto/update-recurso.dto';
 import { Prisma } from '@prisma/client';
 import { ResponseDto } from './dto/response.dto';
+import { RecursosService } from './recursos.service';
 
 @Controller('recursos')
 export class RecursosController {

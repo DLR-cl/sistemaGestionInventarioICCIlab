@@ -5,22 +5,20 @@ import { DatabaseService } from 'src/database/database/database.service';
 import { prestamo, Prisma, recurso } from '@prisma/client';
 import { ResponseDto } from './dto/response.dto';
 import { RecursoEntity } from './entities/recurso.entity';
-import { Prestamo } from 'src/prestamos/entities/prestamo.entity';
 @Injectable()
-export class recursoService {
+export class RecursosService {
   constructor(private readonly databaseService : DatabaseService){}
   
   
   async create(createRecurso: CreateRecursoDto) : Promise<ResponseDto<recurso>>{
     try {
-      
         const newRecurso = await this.databaseService.recurso.create(
           {data : {
             marca : createRecurso.marca,
-            Descripcion : createRecurso.descripcion,
-            fecha_ingreso : createRecurso.fecha_ingresa,
+            descripcion : createRecurso.descripcion,
+            fecha_ingreso : new Date(),
             modelo : createRecurso.modelo,
-            Id_categoria : createRecurso.id_categoria
+            id_categoria : createRecurso.id_categoria
           }});
           
         const response : ResponseDto<recurso> = {
