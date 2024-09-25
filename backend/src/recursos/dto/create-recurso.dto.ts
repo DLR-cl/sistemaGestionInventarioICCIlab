@@ -1,33 +1,23 @@
-import { IsBoolean, IsInt, IsString, IsOptional } from 'class-validator';
+import { IsBoolean, IsInt, IsString, IsOptional, IsNotEmpty, IsDate, IsNumber } from 'class-validator';
 
 export class CreateRecursoDto {
-  @IsInt()
-  icci_id: number;
-
-  @IsInt()
-  id_uta: number;
-
+  @IsOptional()
   @IsString()
-  nombre: string;
+  marca? : string;
 
-  @IsBoolean()
-  estado: boolean;
-
-  @IsBoolean()
-  disponibilidad: boolean;
-
+  @IsNotEmpty()
   @IsString()
-  modelo: string;
+  descripcion : string;
 
+  @IsDate()
+  @IsNotEmpty()
+  fecha_ingresa : Date;
+
+  @IsNotEmpty()
   @IsString()
-  marca: string;
+  modelo : string;
 
-  @IsString()
-  descripcion: string;
-
-  @IsString()
-  lugar: string;
-
-  @IsInt()
-  category_id: number;
+  @IsNumber()
+  @IsNotEmpty()
+  id_categoria : number;
 }

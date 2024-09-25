@@ -4,6 +4,7 @@ import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 import { DatabaseService } from 'src/database/database/database.service';
 import { ResponseDto } from './dto/response.dto';
 import { Categoria } from './entities/categoria.entity';
+import { categoria } from '@prisma/client';
 
 @Injectable()
 export class CategoriasService {
@@ -12,16 +13,17 @@ export class CategoriasService {
 
   }
 
-  async create(createCategoria: CreateCategoriaDto) : Promise<ResponseDto<CreateCategoriaDto>> {
+  async create(createCategoria: CreateCategoriaDto) : Promise<ResponseDto<categoria>> {
     try {
-      const nuevaCategoria = await this.databaseService.category.create({
+      
+      const newcategoria = await this.databaseService.categoria.create({
         data : createCategoria,
       })
 
-      const response : ResponseDto<CreateCategoriaDto> = {
+      const response : ResponseDto<categoria> = {
         statusCode : HttpStatus.CREATED,
         message : 'Categoria creada con exito',
-        data: createCategoria
+        data: newcategoria
       }
       return response
     }catch(error){
@@ -30,20 +32,20 @@ export class CategoriasService {
 
   }
 
-  async findAll() : Promise<Categoria[]>{
+  async findAll() : Promise<categoria[]>{
     try {
-      return await this.databaseService.category.findMany();
+      return await this.databaseService.categoria.findMany();
     } catch(error){
       throw new HttpException('Error al mostrar las categorias', HttpStatus.BAD_REQUEST);
     }
     
   }
 
-  async findOne(id: number) : Promise<Categoria> {
+  async findOne(id: number) : Promise<categoria> {
     try{
-      return await this.databaseService.category.findUnique({
+      return await this.databaseService.categoria.findUnique({
         where : {
-          id : id,
+          Id_categoria: id,
         }
       })
     } catch(error){
@@ -51,25 +53,52 @@ export class CategoriasService {
     }
   }
 
-  update(id: number, updateCategoriaDto: UpdateCategoriaDto) {
-    return `This action updates a #${id} categoria`;
-  }
-
-  async remove(id: number) : Promise<Categoria>{
+  async update(id: number, updateCategoria : UpdateCategoriaDto) : Promise<ResponseDto<categoria>> {
+    
     try {
-      const removeCategoria = await this.databaseService.category.delete({
-        where :{
-          id : id,
+      const findCategoria = await this.databaseService.categoria.findUnique({
+        where : {
+          Id_categoria : id,
         }
       });
 
-      const response : ResponseDto<Categoria> = {
+      if(!findCategoria){
+        throw new HttpException('Error, no existe esa categoria', HttpStatus.BAD_REQUEST);
+      };
+
+      const newCategoria = await this.databaseService.categoria.update({
+        where : {Id_categoria : id},
+        data : updateCategoria,
+      });
+
+      const response : ResponseDto<categoria> = {
+        statusCode : HttpStatus.OK,
+        message : 'La categoria ha sido modificada con exito',
+        data : newCategoria
+      }
+
+      return response;
+    } catch(error){
+      throw new HttpException('Error al actualizar la categoria', HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async remove(id: number) : Promise<ResponseDto<categoria>>{
+    try {
+      const removeCategoria = await this.databaseService.categoria.delete({
+        where :{
+          Id_categoria : id,
+        }
+      });
+
+      const response : ResponseDto<categoria> = {
         statusCode : HttpStatus.OK,
         message: 'categoria borrada con exito',
         data: removeCategoria,
       };
 
       return response;
+      
     } catch(error){
       throw new HttpException('Error al borrar categoria', HttpStatus.BAD_REQUEST);
     }

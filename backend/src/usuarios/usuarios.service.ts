@@ -3,27 +3,55 @@ import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { DatabaseService } from 'src/database/database/database.service';
 import { ResponseDto } from './dto/response.dto';
-import { Usuario } from '@prisma/client';
+import { usuario } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { promises } from 'dns';
+import { TiposUsuario } from './enums/tiposUsuarios.enum';
+import { error } from 'console';
 
 @Injectable()
 export class UsuariosService {
 
   constructor(private readonly databaseService : DatabaseService){}
 
-  async create(createUsuario: CreateUsuarioDto) : Promise<ResponseDto<CreateUsuarioDto>>{
+  async create(createUsuario: CreateUsuarioDto) : Promise<ResponseDto<usuario>>{
     try {
-      const nuevoUsuario = await this.databaseService.usuario.create(
+      const usuario = await this.databaseService.usuario.create(
         {
-          data: createUsuario,
+          data: {
+            nombre: createUsuario.nombre,
+            usuario: createUsuario.usuario,
+            apellido: createUsuario.apellido,
+            correo: createUsuario.correo,
+            password: createUsuario.password,
+            rut: createUsuario.rut,
+          },
         }
       );
-      const response : ResponseDto<CreateUsuarioDto> = {
+
+      if(createUsuario.rol == TiposUsuario.administrador){
+        await this.databaseService.admin.create({
+          data: {
+            id_usuario : usuario.id_usuario,
+          }
+        })
+      }else if(createUsuario.rol == TiposUsuario.ayudante){
+        await this.databaseService.ayudante.create({
+          data: {
+            id_usuario: usuario.id_usuario,
+          }
+        })
+      } else{
+        throw new HttpException('Rol no válido', HttpStatus.BAD_REQUEST);
+      }
+
+
+      const response : ResponseDto<usuario> = {
         statusCode : HttpStatus.CREATED,
         message: 'Usuario creado con exito',
-        data : createUsuario,
+        data : usuario,
       };
+
 
       return response;
 
@@ -41,11 +69,11 @@ export class UsuariosService {
     }
   }
 
-  async findOne(id_usuario: number) : Promise<Prisma.Prisma__UsuarioClient<Usuario>>{
+  async findOne(id_user: number) {
     try{
         return await this.databaseService.usuario.findUnique({
           where : {
-            id : id_usuario,
+            id_usuario : id_user,
           }
         })
       }
@@ -55,19 +83,19 @@ export class UsuariosService {
     }
   
 
-  async update(id_usuario: number, updateUsuario: UpdateUsuarioDto) : Promise<ResponseDto<UpdateUsuarioDto>> {
+  async update(id_user: number, updateUsuario: UpdateUsuarioDto) : Promise<ResponseDto<usuario>> {
     try {
       const actUsuario = await this.databaseService.usuario.update(
         {
-          where: {id : id_usuario},
+          where: {id_usuario : id_user},
           data: updateUsuario
         }
       )
 
-      const response : ResponseDto<UpdateUsuarioDto> = {
+      const response : ResponseDto<usuario> = {
         statusCode : HttpStatus.OK,
         message : 'Usuario actualizado',
-        data : updateUsuario,
+        data : actUsuario,
       }
 
       return response
@@ -76,15 +104,49 @@ export class UsuariosService {
     }
   }
 
-  remove(id_usuario: number) {
+  async remove(id_usuario: number) {
     try {
-      const removeUser : Prisma.Prisma__UsuarioClient<Usuario>= this.databaseService.usuario.delete({
-        where : {id : id_usuario}
+      
+      const findUser = await this.databaseService.usuario.findUnique({
+        where: {
+          id_usuario : id_usuario,
+        }
       })
 
-      const response : ResponseDto<Prisma.Prisma__UsuarioClient<Usuario>> = {
+      // Borrar usuario si es ayudante o administrador
+      if (await this.databaseService.admin.findUnique({
+        where: {
+          id_usuario : findUser.id_usuario,
+        }
+      })){
+        this.databaseService.admin.delete({
+          where : {
+            id_usuario : findUser.id_usuario,
+          }
+        })
+      }else if(await this.databaseService.ayudante.findUnique({
+        where : {
+          id_usuario : findUser.id_usuario,
+        }
+      })){
+        this.databaseService.ayudante.delete({
+          where : {
+            id_usuario : findUser.id_usuario,
+          }
+        })
+      }else{
+        throw new HttpException('Error, usuario no existe', HttpStatus.BAD_REQUEST);
+      };
+
+      // remover usuario
+      const removeUser = this.databaseService.usuario.delete({
+        where : {id_usuario : id_usuario}
+      })
+
+      
+      const response = {
         statusCode : HttpStatus.OK,
-        message : 'Usuario modificado con exito',
+        message : 'Usuario eliminado con exito',
         data : removeUser
       }
 

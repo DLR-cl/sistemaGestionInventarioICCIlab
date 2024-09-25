@@ -2,25 +2,33 @@ import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { CreateRecursoDto } from './dto/create-recurso.dto';
 import { UpdateRecursoDto } from './dto/update-recurso.dto';
 import { DatabaseService } from 'src/database/database/database.service';
-import { Prisma } from '@prisma/client';
+import { prestamo, Prisma, recurso } from '@prisma/client';
 import { ResponseDto } from './dto/response.dto';
 import { RecursoEntity } from './entities/recurso.entity';
 import { Prestamo } from 'src/prestamos/entities/prestamo.entity';
 @Injectable()
-export class RecursosService {
-  constructor(private readonly databaseSercie : DatabaseService){}
+export class recursoService {
+  constructor(private readonly databaseService : DatabaseService){}
   
   
-  async create(createRecurso: CreateRecursoDto) : Promise<ResponseDto<CreateRecursoDto>>{
+  async create(createRecurso: CreateRecursoDto) : Promise<ResponseDto<recurso>>{
     try {
-        const newRecurso = await this.databaseSercie.recursos.create(
-          {data : createRecurso});
+      
+        const newRecurso = await this.databaseService.recurso.create(
+          {data : {
+            marca : createRecurso.marca,
+            Descripcion : createRecurso.descripcion,
+            fecha_ingreso : createRecurso.fecha_ingresa,
+            modelo : createRecurso.modelo,
+            Id_categoria : createRecurso.id_categoria
+          }});
           
-        const response : ResponseDto<CreateRecursoDto> = {
+        const response : ResponseDto<recurso> = {
           statusCode : HttpStatus.CREATED,
           message: 'Recurso creado con exito',
-          data: createRecurso,
+          data: newRecurso,
         }
+
         return response
 
 
@@ -29,29 +37,29 @@ export class RecursosService {
     }
   }
 
-  findAll() : Prisma.PrismaPromise<RecursoEntity[]>{
-    return this.databaseSercie.recursos.findMany({})
+  async findAll() : Promise<recurso[]>{
+    return await this.databaseService.recurso.findMany();
   }
 
-  findOne(id: number) :Prisma.Prisma__RecursosClient<RecursoEntity>{
-    return this.databaseSercie.recursos.findUnique({
+  async findOne(id: number) : Promise<recurso>{
+    return await this.databaseService.recurso.findUnique({
       where : {
-        icci_id: id
+        id_recurso: id
       }
     })
   }
 
-  async update(id: number, updateRecurso: UpdateRecursoDto) : Promise<ResponseDto<UpdateRecursoDto>>{
+  async update(id: number, updateRecurso: UpdateRecursoDto) : Promise<ResponseDto<recurso>>{
       try {
-        const actRecurso = await this.databaseSercie.recursos.update({
-          where : {icci_id : id},
+        const actRecurso = await this.databaseService.recurso.update({
+          where : {id_recurso : id},
           data : updateRecurso      
         }) 
 
-        const response : ResponseDto<UpdateRecursoDto> = {
+        const response : ResponseDto<recurso> = {
           statusCode : HttpStatus.ACCEPTED,
           message : 'Recurso actualizado',
-          data : updateRecurso,
+          data : actRecurso,
         }
         return response;
 
@@ -61,13 +69,23 @@ export class RecursosService {
   }
     
 
-  async remove(id: number) : Promise<ResponseDto<Prisma.Prisma__RecursosClient<RecursoEntity>>>{
+  async remove(id: number) : Promise<ResponseDto<recurso>>{
    try {
-    const deleteRecurso : Prisma.Prisma__RecursosClient<RecursoEntity> = this.databaseSercie.recursos.delete({
-      where : {icci_id : id},
-    })
 
-    const response : ResponseDto<any> = {
+    if(!await this.databaseService.recurso.findUnique({
+      where : {
+        id_recurso : id,
+      }
+    })){
+      throw new HttpException('Recurso a eliminar no existe', HttpStatus.BAD_REQUEST);
+    }
+
+    const deleteRecurso = await this.databaseService.recurso.delete({
+      where : {id_recurso : id},
+    });
+  
+
+    const response : ResponseDto<recurso> = {
       statusCode : HttpStatus.OK,
       message : 'Recurso borrado con exito',
       data: deleteRecurso
@@ -79,11 +97,12 @@ export class RecursosService {
 
   }
 
-  async todosPrestamosRecurso(id_recurso : number) : Promise<Prestamo[]>{
+  // devuelve todos los prestamos en los que aparece el recurso
+  async todosPrestamosRecurso(id_recurso : number) : Promise<prestamo[]>{
     try {
-      const todosPrestamos = await this.databaseSercie.prestamo.findMany({
+      const todosPrestamos = await this.databaseService.prestamo.findMany({
         where:{
-          recurso_icci_id: id_recurso,
+          id_recurso: id_recurso,
         }
       });
 

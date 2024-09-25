@@ -7,19 +7,27 @@ export class CreateUsuarioDto {
     @IsNotEmpty()
     nombre : string;
 
-    @IsBoolean()
+    @IsString()
     @IsNotEmpty()
-    estado : boolean;
+    usuario : string
+    
+    @IsString()
+    @IsNotEmpty()
+    apellido : string;
 
     @IsString()
     @IsNotEmpty()
-    email : string;
+    correo : string;
 
     @IsString()
     @IsNotEmpty()
     password : string
 
+    @IsString()
+    @IsNotEmpty()
+    rut : string;
+
     @IsEnum(TiposUsuario)
     @IsNotEmpty()
-    tipo : TiposUsuario;
+    rol : TiposUsuario;
 }
