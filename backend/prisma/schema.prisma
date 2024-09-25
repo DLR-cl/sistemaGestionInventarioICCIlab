@@ -102,7 +102,6 @@ model recurso {
   id_dici        String?    @db.VarChar(10)
   id_uta         String     @id @db.VarChar(20)
   ubicacion      String?    @db.VarChar(500)
-  id_recurso     Int?
   categoria           categoria?            @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "recurso_ibfk_1")
   prestamo       prestamo[]
   @@index([id_categoria], map: "id_categoria")
