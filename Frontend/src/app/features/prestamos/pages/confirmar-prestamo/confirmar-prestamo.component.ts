@@ -29,7 +29,7 @@ export default class ConfirmarPrestamoComponent implements OnInit {
 
 
   public estudiante = signal<Estudiante>({ rut: 0, nombre: '', apellido: '', carrera: '' });
-  public recurso = signal<Recurso>({ recurso_id: 0, fecha_ingreso: new Date(), categoria: '', marca: '', modelo: '', estado: '', descripcion: '' });
+  public recurso = signal<Recurso>({ recurso_id: 0, icci_id:0, fecha_ingreso: new Date(), categoria: '', marca: '', modelo: '', estado: '', descripcion: '' });
   public isMobile = signal<boolean>(false);
 
   ngOnInit(): void {

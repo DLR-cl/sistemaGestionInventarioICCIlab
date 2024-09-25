@@ -3,31 +3,60 @@
     <mat-card-title>Crear Recurso</mat-card-title>
   </mat-card-header>
   <mat-dialog-content>
-    <form [formGroup]="formCrearRecurso">
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="recurso_id">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="marca">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="modelo">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="modelo">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="modelo">
-      </mat-form-field>
-    </form>
+    <mat-grid-list cols="2" rowHeight="100px" gutterSize="20px" >
+      <form [formGroup]="formCrearRecurso" required>
+        <mat-grid-tile colspan="1">
+          <mat-form-field appearance="outline">
+            <mat-label>ID Recurso</mat-label>
+            <input matInput formControlName="recurso_id">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+          <mat-form-field appearance="outline">
+            <mat-label>ID UTA</mat-label>
+            <input matInput formControlName="icci_id">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Marca</mat-label>
+            <input matInput formControlName="marca">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Modelo</mat-label>
+            <input matInput formControlName="modelo">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Estado</mat-label>
+            <input matInput formControlName="estado">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="categoria">
+              <mat-option>--</mat-option>
+              @for(categoria of [1,2,3]; track $index){
+                <mat-option [value]="'computadores'">Computadores</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <mat-form-field appearance="outline">
+            <mat-label>Descripcion</mat-label>
+            <input matInput formControlName="descripcion">
+          </mat-form-field>
+        </mat-grid-tile>
+      </form>
+    </mat-grid-list>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-flat-button (click)="cerrarDialog()">Cerrar</button>
-    <button mat-flat-button >Crear Recurso</button>
+    <button mat-flat-button (click)="cerrarDialog()">Cancelar</button>
+    <button mat-flat-button >Crear</button>
   </mat-dialog-actions>
 </mat-card>

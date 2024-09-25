@@ -26,7 +26,7 @@ export default class GestionPrestamoComponent implements OnInit, OnDestroy {
   public hasCameraPermission = false; 
   public isPermissionChecked = false; 
 
-  public recurso = signal<Recurso>({ recurso_id: 0, fecha_ingreso: new Date(), categoria: '', marca: '', modelo: '', estado: '', descripcion: '' });
+  public recurso = signal<Recurso>({ recurso_id: 0, icci_id:0,fecha_ingreso: new Date(), categoria: '', marca: '', modelo: '', estado: '', descripcion: '' });
 
   public config: ScannerQRCodeConfig = {
     isBeep: false,

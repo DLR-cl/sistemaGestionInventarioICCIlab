@@ -38,8 +38,11 @@ export default class RecursosComponent implements OnInit {
   openDialogCrear(){
 
     this.dialogCrear.open(CrearRecursoDialogComponent, {
-      height: '600px',
-      width: '600px'
+      maxWidth: '850px',
+      maxHeight: '700px',
+      height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal'
     });
   }
 }
