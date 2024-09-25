@@ -25,7 +25,7 @@ export default class RecursosComponent implements OnInit {
   private categoriaService = inject(CategoriasService);
   private router = inject(Router);
 
-  public categoria = signal<Categoria>({ categoria_id: 0, nombre: '' });
+  public categoria = signal<Categoria>({categoria_id: 0, nombre: '', fecha_creacion: new Date, icon: ''});
   public displayedColumns: string[] = ['icci_id', 'nombre', 'categoria', 'marca', 'modelo','color','actions'];
   public recursosList = signal<Recurso[]>([]);
 

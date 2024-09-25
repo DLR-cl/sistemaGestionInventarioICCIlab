@@ -1,34 +1,5 @@
-<mat-card class="video">
-  <ngx-scanner-qrcode 
-  #action="scanner" 
-  [config]="config" 
-  [canvasStyles]="[{ lineWidth: 4, strokeStyle: 'black', fillStyle: '#00FF0000 ' }]"
-  (event)="onScanData($event)"
-  [class.hide]="!action.isStart || !scannerData.value"
-  >
-  </ngx-scanner-qrcode>
+<mat-card >
+  <mat-card-title>
+    <h1>Sistema de gestion de inventario</h1>
+  </mat-card-title>
 </mat-card>
-<mat-grid-list [cols]="isMobile()? '1': '3'" rowHeight="300px" gutterSize="40px">
-  <mat-grid-tile>
-    <mat-card>1</mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-card>2
-    </mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-card>
-      <button mat-button (click)="action.isStart ? action.stop(): action.start()">click</button>  
-    </mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-card>4</mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-card>5</mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-card>6</mat-card>
-  </mat-grid-tile>
-</mat-grid-list>
-

@@ -8,31 +8,31 @@ export class RecursosService {
 
   private RECURSOS_DATA : Recurso[] = [
     {
-      icci_id: 123456,
-      nombre: "Meta Quest 2",
+      recurso_id: 123456,
       categoria: "Meta Quest",
-      marca: "Meta Quest",
+      marca: "Meta",
+      fecha_ingreso: new Date(),
       modelo: "Quest 2",
-      color: "Blanco",
-      estado: "Activo"
+      estado: "Activo",
+      descripcion: 'Un visor de realidad virtual'
     },
     {
-      icci_id: 123457,
-      nombre: "Meta Quest 1",
+      recurso_id: 123457,
       categoria: "Monitores",
       marca: "Meta Quest",
       modelo: "Quest 1",
-      color: "Blanco",
-      estado: "Activo"
+      fecha_ingreso: new Date(),
+      estado: "Activo",
+      descripcion: 'Un visor de realidad virtual'
     },
     {
-      icci_id: 123458,
-      nombre: "Dell Inspiron 15",
+      recurso_id: 123458,
       categoria: "Computadores",
       marca: "Dell",
       modelo: "Inspiron 15",
-      color: "blanco",
-      estado: "Activo"
+      estado: "Activo",
+      fecha_ingreso: new Date(),
+      descripcion: 'Un computador portátil'
     }
   ]
 
@@ -40,9 +40,9 @@ export class RecursosService {
     return this.RECURSOS_DATA
   }
 
-  getRecursoById(icci_id: number) {
+  getRecursoById(recurso_id: number) {
     return this.RECURSOS_DATA.find(recurso => 
-      recurso.icci_id === icci_id) || { icci_id: 0, nombre: '', categoria: '', marca: '', modelo: '', color: '', estado: '' };
+      recurso.recurso_id === recurso_id) || { recurso_id: 0, fecha_ingreso: new Date(), categoria: '', marca: '', modelo: '', estado: '', descripcion: '' };
   }
 
   getRecursosByCategoria(categoria: string): Recurso[] {

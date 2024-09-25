@@ -5,7 +5,7 @@
       <mat-card-title>Recursos</mat-card-title>
     </div>
     <div class="header-right">
-      <button mat-flat-button>Agregar Recurso</button>
+      <button mat-flat-button (click)="openDialogCrear()">Agregar Recurso</button>
     </div>
   </mat-card>
 </div>
@@ -13,19 +13,9 @@
 <div class="table-container">
   <table mat-table [dataSource]="recursoData()" class="mat-elevation-z3">
 
-    <ng-container matColumnDef="icci_id">
-      <th mat-header-cell *matHeaderCellDef> icci_id </th>
-      <td mat-cell *matCellDef="let element"> {{element.icci_id}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
-      <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="categoria">
-      <th mat-header-cell *matHeaderCellDef> Descripcion </th>
-      <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
+    <ng-container matColumnDef="recurso_id">
+      <th mat-header-cell *matHeaderCellDef> Recurso_id </th>
+      <td mat-cell *matCellDef="let element"> {{element.recurso_id}} </td>
     </ng-container>
   
     <ng-container matColumnDef="marca">
@@ -33,14 +23,24 @@
       <td mat-cell *matCellDef="let element"> {{element.marca}} </td>
     </ng-container>
   
+    <ng-container matColumnDef="categoria">
+      <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+      <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
+    </ng-container>
+  
     <ng-container matColumnDef="modelo">
       <th mat-header-cell *matHeaderCellDef> Modelo </th>
       <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
     </ng-container>
+
+    <ng-container matColumnDef="fecha_ingreso">
+      <th mat-header-cell *matHeaderCellDef>Fecha Ingreso</th>
+      <td mat-cell *matCellDef="let element"> {{element.fecha_ingreso | date:'dd/MM/yyyy - HH:mm:ss'}} </td>
+    </ng-container>
       
-    <ng-container matColumnDef="color">
-      <th mat-header-cell *matHeaderCellDef> Color </th>
-      <td mat-cell *matCellDef="let element"> {{element.color}} </td>
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+      <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
     </ng-container>
 
     <ng-container matColumnDef="estado">
