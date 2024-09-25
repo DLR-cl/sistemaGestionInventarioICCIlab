@@ -3,7 +3,7 @@ import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { DatabaseService } from 'src/database/database/database.service';
 import { ResponseDto } from './dto/response.dto';
-import { usuario } from '@prisma/client';
+import { ayudante, usuario } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { promises } from 'dns';
 import { TiposUsuario } from './enums/tiposUsuarios.enum';
@@ -154,5 +154,15 @@ export class UsuariosService {
     } catch(error){
       throw new HttpException('Error al borrar el usuario', HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async verAyudantes() {
+    const manyAyudantes : ayudante[] =  await this.databaseService.ayudante.findMany({
+      include: {
+        Usuario: true,
+      }
+    });
+
+    return manyAyudantes;
   }
 }

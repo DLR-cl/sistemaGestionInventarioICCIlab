@@ -13,13 +13,7 @@ export class RecursosService {
   async create(createRecurso: CreateRecursoDto) : Promise<ResponseDto<recurso>>{
     try {
         const newRecurso = await this.databaseService.recurso.create(
-          {data : {
-            marca : createRecurso.marca,
-            descripcion : createRecurso.descripcion,
-            fecha_ingreso : new Date(),
-            modelo : createRecurso.modelo,
-            id_categoria : createRecurso.id_categoria
-          }});
+          {data : createRecurso});
           
         const response : ResponseDto<recurso> = {
           statusCode : HttpStatus.CREATED,
@@ -39,18 +33,18 @@ export class RecursosService {
     return await this.databaseService.recurso.findMany();
   }
 
-  async findOne(id: number) : Promise<recurso>{
+  async findOne(id: string) : Promise<recurso>{
     return await this.databaseService.recurso.findUnique({
       where : {
-        id_recurso: id
+        id_uta: id
       }
     })
   }
 
-  async update(id: number, updateRecurso: UpdateRecursoDto) : Promise<ResponseDto<recurso>>{
+  async update(id: string, updateRecurso: UpdateRecursoDto) : Promise<ResponseDto<recurso>>{
       try {
         const actRecurso = await this.databaseService.recurso.update({
-          where : {id_recurso : id},
+          where : {id_uta : id},
           data : updateRecurso      
         }) 
 
@@ -67,19 +61,19 @@ export class RecursosService {
   }
     
 
-  async remove(id: number) : Promise<ResponseDto<recurso>>{
+  async remove(id: string) : Promise<ResponseDto<recurso>>{
    try {
 
     if(!await this.databaseService.recurso.findUnique({
       where : {
-        id_recurso : id,
+        id_uta : id,
       }
     })){
       throw new HttpException('Recurso a eliminar no existe', HttpStatus.BAD_REQUEST);
     }
 
     const deleteRecurso = await this.databaseService.recurso.delete({
-      where : {id_recurso : id},
+      where : {id_uta : id},
     });
   
 
@@ -96,11 +90,11 @@ export class RecursosService {
   }
 
   // devuelve todos los prestamos en los que aparece el recurso
-  async todosPrestamosRecurso(id_recurso : number) : Promise<prestamo[]>{
+  async todosPrestamosRecurso(id_uta : string) : Promise<prestamo[]>{
     try {
       const todosPrestamos = await this.databaseService.prestamo.findMany({
         where:{
-          id_recurso: id_recurso,
+          id_uta: id_uta,
         }
       });
 
@@ -109,4 +103,5 @@ export class RecursosService {
       throw new HttpException('Error al obtener todos los prestamos en los que aparece el recurso', HttpStatus.BAD_REQUEST);
     }
   }
+
 }

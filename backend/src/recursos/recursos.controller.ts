@@ -12,7 +12,7 @@ export class RecursosController {
   @Post()
   async create(@Body() createRecurso: CreateRecursoDto) : Promise<ResponseDto<CreateRecursoDto>>{
     const newRecurso = await this.recursosService.create(createRecurso)
-    return newRecurso
+    return newRecurso;
   
   }
 
@@ -23,20 +23,22 @@ export class RecursosController {
 
   @Get('/prestamos/:id')
   async findAllRecursosEnPrestamo(@Param('id') id : string){
-    return await this.recursosService.todosPrestamosRecurso(+id);
+    return await this.recursosService.todosPrestamosRecurso(id);
   }
+
+
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.recursosService.findOne(+id);
+    return this.recursosService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateRecurso: UpdateRecursoDto) {
-    return this.recursosService.update(+id, updateRecurso);
+    return this.recursosService.update(id, updateRecurso);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.recursosService.remove(+id);
+    return this.recursosService.remove(id);
   }
 }

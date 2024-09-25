@@ -3,8 +3,8 @@ import { IsDate, IsEnum, isNotEmpty, IsNotEmpty, IsNumber, IsOptional, IsString 
 export class CreatePrestamoDto {
 
     @IsNotEmpty()
-    @IsNumber()
-    id_recurso : number;
+    @IsString()
+    id_uta : string;
 
 
 }

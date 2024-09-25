@@ -4,7 +4,7 @@ import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 import { DatabaseService } from 'src/database/database/database.service';
 import { ResponseDto } from './dto/response.dto';
 import { Categoria } from './entities/categoria.entity';
-import { categoria } from '@prisma/client';
+import { categoria, recurso} from '@prisma/client';
 
 @Injectable()
 export class CategoriasService {
@@ -104,6 +104,25 @@ export class CategoriasService {
       
     } catch(error){
       throw new HttpException('Error al borrar categoria', HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async getAllRecursoByCategoria(id: number): Promise<recurso[]>{
+    try {
+      const findCategoria = await this.databaseService.categoria.findUnique({
+        where : {
+          id_categoria: id,
+        },
+        include: {
+          recurso: true,
+        }
+      });
+
+
+      const recursos : recurso[] = findCategoria.recurso;
+      return  recursos;
+    } catch(error){
+      throw new HttpException('Error al obtener los recursos según categoria', HttpStatus.BAD_REQUEST);
     }
   }
 }

@@ -19,6 +19,11 @@ export class CategoriasController {
     return this.categoriasService.findAll();
   }
 
+  @Get(':id/recursos')
+  getAllRecursosByCategoria(@Param('id') id: string){
+    return this.categoriasService.getAllRecursoByCategoria(+id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.categoriasService.findOne(+id);

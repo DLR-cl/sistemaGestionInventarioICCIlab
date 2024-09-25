@@ -22,6 +22,10 @@ export class UsuariosController {
     return this.usuariosService.findOne(+id);
   }
 
+  @Get('/ayudantes')
+  getAllAyudantes(){
+    return this.usuariosService.verAyudantes();
+  }
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
     return this.usuariosService.update(+id, updateUsuarioDto);
