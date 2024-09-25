@@ -22,39 +22,25 @@ export const routes: Routes = [
           },
           
           {
-            path: 'prestamos', loadComponent: () => import('./features/prestamos/pages/inicio/inicio.component'),
+            path: 'prestamos', loadComponent: () => import('./features/prestamos/pages/select-category/inicio.component'),
           },
           {
-            path: 'prestamos/:categoria', loadComponent: () => import('./features/prestamos/pages/recursos/recursos.component')
+            path: 'prestamos/:categoria', loadComponent: () => import('./features/prestamos/pages/select-recurso/recursos.component')
           },
           {
-            path: 'prestamos/:categoria/:recurso', loadComponent: () => import('./features/prestamos/pages/gestion-prestamo/gestion-prestamo.component')
+            path: 'prestamos/:categoria/:recurso', loadComponent: () => import('./features/prestamos/pages/scan-qr/gestion-prestamo.component')
           },
           {
             path: 'prestamos/:categoria/:recurso/:estudiante', loadComponent: () => import('./features/prestamos/pages/confirmar-prestamo/confirmar-prestamo.component')
           },
-          {
-            path: 'inventario', loadComponent: () => import('./features/inventario/inventario.component'),
+          { 
+            path: 'inventario/recursos', loadComponent: () => import('./features/inventario/pages/gestion-recursos/recursos.component') 
           },
           { 
-            path: 'inventario/recursos', loadComponent: () => import('./features/inventario/pages/recursos/recursos.component') 
-          },
-          { 
-            path: 'inventario/categorias', loadComponent: () => import('./features/inventario/pages/categorias/categorias.component') 
+            path: 'inventario/categorias', loadComponent: () => import('./features/inventario/pages/gestion-categorias/categorias.component') 
           },
           { 
             path: 'ayudantes', loadComponent: () => import('./features/ayudantes/pages/ayudantes/ayudantes.component') 
-          },
-          {
-            path: 'advertencias', loadComponent: () => import('./features/inventario/inventario.component')
-          },
-        ],
-      },
-      {
-        path: '', canActivate : [],//Guard Admin
-        children: [
-          {
-            path: 'ayudantes', loadComponent: () => import('./features/inventario/inventario.component')
           }
         ],
       },

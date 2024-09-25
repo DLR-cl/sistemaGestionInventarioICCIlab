@@ -7,14 +7,14 @@
       <form [formGroup]="formCrearRecurso" required>
         <mat-grid-tile colspan="1">
           <mat-form-field appearance="outline">
-            <mat-label>ID Recurso</mat-label>
-            <input matInput formControlName="recurso_id">
+            <mat-label>ID UTA</mat-label>
+            <input matInput formControlName="id_uta">
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile colspan="1">
           <mat-form-field appearance="outline">
-            <mat-label>ID UTA</mat-label>
-            <input matInput formControlName="icci_id">
+            <mat-label>ID DICI</mat-label>
+            <input matInput formControlName="id_dici">
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile colspan="1">
@@ -31,8 +31,8 @@
         </mat-grid-tile>
         <mat-grid-tile colspan="1">
           <mat-form-field appearance="outline">
-            <mat-label>Estado</mat-label>
-            <input matInput formControlName="estado">
+            <mat-label>Ubicacion</mat-label>
+            <input matInput formControlName="ubicacion">
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -57,6 +57,6 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-flat-button (click)="cerrarDialog()">Cancelar</button>
-    <button mat-flat-button >Crear</button>
+    <button mat-flat-button (click)="crearRecurso()" >Crear</button>
   </mat-dialog-actions>
 </mat-card>

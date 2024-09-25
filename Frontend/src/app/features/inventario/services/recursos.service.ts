@@ -1,10 +1,16 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Recurso } from '../interfaces/recurso.interface';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecursosService {
+
+  public BASE_URL = environment.apiUrl;
+
+  private httpClient = inject(HttpClient);
 
   private RECURSOS_DATA : Recurso[] = [
     {
@@ -40,6 +46,7 @@ export class RecursosService {
   ]
 
   getRecursos(): Recurso[] {
+    this.httpClient.get(`${this.BASE_URL}/recursos`)
     return this.RECURSOS_DATA
   }
 
