@@ -20,12 +20,12 @@ model ayudante {
 }
 
 model especial {
-  descripcion String   @db.VarChar(1000)
-  motivo      String   @db.VarChar(1000)
-  id_prestamo Int      @id
-  id_usuario  Int
+  descripcion String?  @db.VarChar(1000)
+  motivo      String?  @db.VarChar(1000)
+  id_prestamo Int      @id @default(autoincrement())
+  id_usuario  Int?
   prestamo    prestamo @relation(fields: [id_prestamo], references: [id_prestamo], onDelete: NoAction, onUpdate: NoAction, map: "especial_ibfk_1")
-  admin       admin    @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "especial_ibfk_2")
+  admin       admin?   @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "especial_ibfk_2")
 
   @@index([id_usuario], map: "id_usuario")
 }
@@ -33,7 +33,7 @@ model especial {
 model prestamo {
   id_prestamo  Int                 @id @default(autoincrement())
   fecha_inicio DateTime            @db.Date
-  fecha_fin    DateTime?            @db.Date
+  fecha_fin    DateTime?           @db.Date
   id_recurso   Int
   especial     especial?
   recursos     recursos_inventario @relation(fields: [id_recurso], references: [id_recurso], onDelete: NoAction, onUpdate: NoAction, map: "prestamo_ibfk_1")
@@ -58,60 +58,58 @@ model regular {
 
 model sanciones {
   grado          Int
-  id_sanciones   Int        @id @default(autoincrement())
-  comentario     String     @db.VarChar(1000)
-  estado_sancion String     @db.VarChar(9)
-  id_usuario     Int
-  rut            String     @db.VarChar(12)
-  Usuario        usuario    @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "sanciones_ibfk_1")
-  Estudiante     estudiante @relation(fields: [rut], references: [rut], onDelete: NoAction, onUpdate: NoAction, map: "sanciones_ibfk_2")
+  id_sanciones   Int         @id @default(autoincrement())
+  comentario     String      @db.VarChar(1000)
+  estado_sancion String      @db.VarChar(9)
+  id_usuario     Int?
+  rut            String?     @db.VarChar(12)
+  Usuario        usuario?    @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "sanciones_ibfk_1")
+  Estudiante     estudiante? @relation(fields: [rut], references: [rut], onDelete: NoAction, onUpdate: NoAction, map: "sanciones_ibfk_2")
 
   @@index([id_usuario], map: "id_usuario")
   @@index([rut], map: "rut")
 }
 
 model categoria {
-  Id_categoria     Int       @id @default(autoincrement())
-  nombre_categoria String    @db.VarChar(50)
-  fecha_creacion   String    @db.VarChar(50)
+  id_categoria     Int       @id @default(autoincrement())
+  nombre_categoria String?   @db.VarChar(50)
+  fecha_creacion   String?   @db.VarChar(50)
   recurso          recurso[]
 }
 
 model estudiante {
+  p_nombre          String?     @db.VarChar(30)
+  p_apellido        String?     @db.VarChar(30)
   rut               String      @id @db.VarChar(12)
-  p_nombre          String      @db.VarChar(30)
-  p_apellido        String      @db.VarChar(30)
-  m_apellido        String      @db.VarChar(30)
-  s_nombre          String      @db.VarChar(30)
-  correo            String      @db.VarChar(50)
-  direccion         String      @db.VarChar(60)
-  fono              String      @db.VarChar(9)
-  ingreso           Int
-  estado_estudiante String      @db.VarChar(9)
+  m_apellido        String?     @db.VarChar(30)
+  s_nombre          String?     @db.VarChar(30)
+  correo            String?     @db.VarChar(50)
+  direccion         String?     @db.VarChar(60)
+  fono              String?     @db.VarChar(9)
+  ingreso           Int?
+  estado_estudiante String?     @db.VarChar(9)
   regular           regular[]
   sanciones         sanciones[]
 }
 
 model recurso {
   id_recurso          Int                  @id @default(autoincrement())
-  id_uta              Int                  @unique
-  disponibilidad      Boolean              @default(true)
   marca               String?              @db.VarChar(50)
-  Descripcion         String               @db.VarChar(3000)
-  fecha_ingreso       DateTime             @db.Date
-  modelo              String               @db.VarChar(50)
-  Id_categoria        Int
-  categoria           categoria            @relation(fields: [Id_categoria], references: [Id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "recurso_ibfk_1")
+  descripcion         String?              @db.VarChar(3000)
+  fecha_ingreso       DateTime?            @db.Date
+  modelo              String?              @db.VarChar(50)
+  id_categoria        Int?
+  categoria           categoria?           @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "recurso_ibfk_1")
   recursos_inventario recursos_inventario?
 
-  @@index([Id_categoria], map: "Id_categoria")
+  @@index([id_categoria], map: "id_categoria")
 }
 
 model usuario {
   id_usuario Int         @id @default(autoincrement())
   nombre     String      @db.VarChar(30)
   usuario    String      @db.VarChar(30)
-  apellido   String      @db.VarChar(30)
+  apellido   String?     @db.VarChar(30)
   correo     String      @db.VarChar(50)
   password   String      @db.VarChar(30)
   rut        String      @db.VarChar(12)
@@ -121,8 +119,11 @@ model usuario {
 }
 
 model recursos_inventario {
-  id_recurso   Int        @id
-  cont_recurso Int
-  prestamo     prestamo[]
-  recurso      recurso    @relation(fields: [id_recurso], references: [id_recurso], onDelete: NoAction, onUpdate: NoAction, map: "recursos_inventario_ibfk_1")
+  id_recurso     Int        @id @default(autoincrement())
+  estado_recurso Int        @default(1)
+  id_dici        String     @unique @db.VarChar(10)
+  id_uta         String     @unique @db.VarChar(20)
+  ubicacion      String     @db.VarChar(500)
+  prestamo       prestamo[]
+  recurso        recurso    @relation(fields: [id_recurso], references: [id_recurso], onDelete: NoAction, onUpdate: NoAction, map: "recursos_inventario_ibfk_1")
 }
