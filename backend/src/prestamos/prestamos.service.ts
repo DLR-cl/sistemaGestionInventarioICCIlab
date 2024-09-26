@@ -134,6 +134,23 @@ export class PrestamosService {
      }
    }
 
+   async findFinalizados() : Promise<prestamo[]>{
+    try {
+      const finalizados : prestamo[] = await this.databaseService.prestamo.findMany({
+        where : {
+          fecha_fin : {
+            not : null,
+          }
+        }
+      });
+
+
+      return finalizados;
+    } catch (error) {
+      throw new HttpException('Error al obtener todos los prestamos inactivos', HttpStatus.BAD_REQUEST);
+    }
+   }
+
 
 
 

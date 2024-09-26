@@ -27,7 +27,15 @@ export class PrestamosController {
     return this.prestamosService.findOne(+id);
   }
 
+  @Get('/activos')
+  async getAllActivos(){
+    return await this.prestamosService.findActivos();
+  }
 
+  @Get('/finalizados')
+  async getAllFinalizados(){
+    return await this.prestamosService.findFinalizados();
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePrestamoDto: UpdatePrestamoDto) {
