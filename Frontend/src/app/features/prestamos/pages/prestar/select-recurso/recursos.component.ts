@@ -46,7 +46,8 @@ export default class RecursosComponent implements OnInit {
   setAllRecursosByCategory(): void {
     const id_categoria = +this.activateRouter.snapshot.params['categoria'];
     this.recursosService.getRecursosByCategoria(id_categoria).subscribe((res) => {
-      this.recursosData.set(res);
+      const recursosDisponibles = res.filter((recurso) => recurso.estado_recurso === true);
+      this.recursosData.set(recursosDisponibles);
     });
   }
 
@@ -58,7 +59,6 @@ export default class RecursosComponent implements OnInit {
   }
 
   onPrestar(id_uta: number){
-    this.router.navigate(['prestamos', this.categoria()?.id_categoria, id_uta]);
-    console.log('Prestar', id_uta);
+    this.router.navigate(['prestamos', this.categoria()?.id_categoria, 'prestar',id_uta]);
   }
 }

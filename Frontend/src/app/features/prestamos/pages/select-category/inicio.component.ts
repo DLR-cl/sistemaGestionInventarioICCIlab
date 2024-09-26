@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { CategoriasService } from '../../../../inventario/services/categorias.service';
-import { Categoria } from '../../../../inventario/interfaces/categoria.interface';
+import { CategoriasService } from '../../../inventario/services/categorias.service';
+import { Categoria } from '../../../inventario/interfaces/categoria.interface';
 
 @Component({
   selector: 'app-inicio',
@@ -72,6 +72,6 @@ export default class InicioComponent implements OnInit {
   }
   onPrestar(id_categoria : number){
     console.log('Prestar', id_categoria);
-    this.router.navigate([`/prestamos/${id_categoria}`]);
+    this.router.navigate([`/prestamos/prestar/${id_categoria}`]);
   }
 }

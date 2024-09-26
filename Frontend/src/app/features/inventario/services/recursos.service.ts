@@ -58,15 +58,15 @@ export class RecursosService {
   }
 
   getRecursosByCategoria(id_categoria: number): Observable<RecursoData[]> {
-    return this.httpClient.get<RecursoData[]>(`${this.BASE_URL}/recursos/categoria/${id_categoria}`)
-  }
-
-  getRecurosByCategoriaAndEstado(id_categoria: number, estado_recurso: boolean): Observable<RecursoData[]> {
-    return this.httpClient.get<RecursoData[]>(`${this.BASE_URL}/recursos/categoria/${id_categoria}/estado/${estado_recurso}`)
+    return this.httpClient.get<RecursoData[]>(`${this.BASE_URL}/categorias/${id_categoria}/recursos`)
   }
   
   crearRecurso(recurso: CreateRecurso): Observable<CreateRecurso> {
     return this.httpClient.post<RecursoData>(`${this.BASE_URL}/recursos`, recurso)
+  }
+
+  updateRecurso(id_uta : string , recurso: CreateRecurso): Observable<ResponseRecurso> {
+    return this.httpClient.patch<ResponseRecurso>(`${this.BASE_URL}/recursos/${id_uta}`, recurso)
   }
 
   deleteRecurso(id_uta: string): Observable<ResponseRecurso> {

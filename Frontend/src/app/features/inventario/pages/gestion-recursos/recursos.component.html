@@ -75,7 +75,7 @@
         <button mat-icon-button class="btn-view" >
           <mat-icon>visibility</mat-icon>
         </button>
-        <button mat-icon-button class="btn-edit">
+        <button mat-icon-button (click)="openDialogEdit(element.id_uta)" class="btn-edit">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button (click)="openDialogDelete(element.id_uta)" class="btn-delete">

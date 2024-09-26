@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { CrearRecursoDialogComponent } from './dialog/crear-recurso-dialog/crear-recurso-dialog.component';
 import { DeleteRecursoDialogComponent } from './dialog/delete-recurso-dialog/delete-recurso-dialog.component';
+import { UpdateRecursosDialogComponent } from './dialog/update-recursos-dialog/update-recursos-dialog.component';
 
 @Component({
   selector: 'app-recursos',
@@ -49,13 +50,6 @@ export default class RecursosComponent implements OnInit {
     });
   }
 
-  openDialogDelete(id_uta: number){
-    this.dialog.open(DeleteRecursoDialogComponent, {
-      data: {id_uta: id_uta},
-      height: '300px',
-      width: '400px',
-    });
-  }
 
   openDialogCrear(){
 
@@ -65,6 +59,25 @@ export default class RecursosComponent implements OnInit {
       height: '100%',
       width: '100%',
       panelClass: 'full-screen-modal'
+    });
+  }
+
+  openDialogEdit(id_uta: number){
+    this.dialog.open(UpdateRecursosDialogComponent, {
+      data: {id_uta: id_uta},
+      maxWidth: '850px',
+      maxHeight: '700px',
+      height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal'
+    });
+  }
+
+  openDialogDelete(id_uta: number){
+    this.dialog.open(DeleteRecursoDialogComponent, {
+      data: {id_uta: id_uta},
+      height: '300px',
+      width: '400px',
     });
   }
 }

@@ -26,5 +26,5 @@ export interface CreateRecurso {
 export interface ResponseRecurso {
   statusCode: number;
   message: string;
-  data: any;  
+  data: RecursoData[];  
 }

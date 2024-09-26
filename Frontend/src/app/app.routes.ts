@@ -24,17 +24,20 @@ export const routes: Routes = [
             path: 'prestamos/seguimiento', loadComponent: () => import('./features/prestamos/pages/seguimiento/seguimiento.component'),
           },
           {
-            path: 'prestamos', loadComponent: () => import('./features/prestamos/pages/prestar/select-category/inicio.component'),
+            path: 'prestamos', loadComponent: () => import('./features/prestamos/pages/select-category/inicio.component'),
           },
           {
-            path: 'prestamos/:categoria', loadComponent: () => import('./features/prestamos/pages/prestar/select-recurso/recursos.component')
+            path: 'prestamos/prestar/:categoria', loadComponent: () => import('./features/prestamos/pages/prestar/select-recurso/recursos.component')
           },
           {
-            path: 'prestamos/:categoria/:recurso', loadComponent: () => import('./features/prestamos/pages/prestar/scan-qr/gestion-prestamo.component')
+            path: 'prestamos/:categoria/prestar/:recurso', loadComponent: () => import('./features/prestamos/pages/prestar/scan-qr/gestion-prestamo.component')
           },
           {
-            path: 'prestamos/:categoria/:recurso/:estudiante', loadComponent: () => import('./features/prestamos/pages/prestar/confirmar-prestamo/confirmar-prestamo.component')
+            path: 'prestamos/:categoria/prestar/:recurso/:estudiante', loadComponent: () => import('./features/prestamos/pages/prestar/confirmar-prestamo/confirmar-prestamo.component')
           },
+          // {
+          //   path: 'prestamos/:categoria/devolver',
+          // },
           { 
             path: 'inventario/recursos', loadComponent: () => import('./features/inventario/pages/gestion-recursos/recursos.component') 
           },

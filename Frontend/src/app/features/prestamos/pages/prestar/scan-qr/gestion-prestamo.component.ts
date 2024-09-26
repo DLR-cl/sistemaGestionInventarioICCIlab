@@ -1,10 +1,10 @@
-import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecursoData } from '../../../../inventario/interfaces/recurso.interface';
 import { RecursosService } from '../../../../inventario/services/recursos.service';
 import { MatCardModule } from '@angular/material/card';
 import { NgxScannerQrcodeComponent, NgxScannerQrcodeModule, ScannerQRCodeConfig, ScannerQRCodeResult } from 'ngx-scanner-qrcode';
-import { BehaviorSubject, delay, filter, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './gestion-prestamo.component.html',
   styleUrls: ['./gestion-prestamo.component.css']
 })
-export default class GestionPrestamoComponent implements OnInit, OnDestroy {
+export default class GestionPrestamoComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private routerActive = inject(ActivatedRoute);
   private router = inject(Router);
@@ -40,17 +40,17 @@ export default class GestionPrestamoComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-    this.checkCameraAccess();
     this.setRecursoById();
-    if(!this.recursoData()?.id_uta){
-      this.router.navigate(['/**']);
-    }
   }
 
   ngOnDestroy(): void {
     if(this.scanner.isStart){
       this.scanner.stop();
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.checkCameraAccess();
   }
 
   onScanData(event: ScannerQRCodeResult[]) {
@@ -61,10 +61,11 @@ export default class GestionPrestamoComponent implements OnInit, OnDestroy {
         this.scanner.stop();
         const scannedValue = data[0].value;
         const categoria = this.routerActive.snapshot.params['categoria'];
+      
         const recurso = this.routerActive.snapshot.params['recurso'];
         const estudiante = scannedValue; 
         
-        this.router.navigate([`/prestamos/${categoria}/${recurso}/${estudiante}`]);
+        this.router.navigate([`/prestamos/${categoria}/prestar/${recurso}/${estudiante}`]);
       }
     });
   }
@@ -74,7 +75,7 @@ export default class GestionPrestamoComponent implements OnInit, OnDestroy {
 
       this.hasCameraPermission = true;
 
-      if (this.scanner && this.scanner.isStart === false) {
+      if (this.scanner.isStart === false) {
         this.scanner.start();
       }
     }).catch((error) => {
@@ -88,6 +89,7 @@ export default class GestionPrestamoComponent implements OnInit, OnDestroy {
   setRecursoById(): void {
     const idUta = (this.routerActive.snapshot.params['recurso']);
     this.recursoService.getRecursoById(idUta).subscribe((res) => {
+      console.log(res);
       this.recursoData.set(res);
     });
   }
