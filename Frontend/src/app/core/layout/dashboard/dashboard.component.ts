@@ -50,21 +50,16 @@ export default class DashboardComponent implements OnInit{
     ])
     .subscribe((result) => {
       if(result.breakpoints[Breakpoints.XSmall] ){
-        console.log('MOBILE');
         this.isMobile.set(true);
       }
       else if(result.breakpoints[Breakpoints.Small]){
-        console.log('Tablet');
         this.isMobile.set(true);
       }else if(result.breakpoints[Breakpoints.Medium]){
-        console.log('Medium');
         this.isMobile.set(true);
       } else if(result.breakpoints[Breakpoints.Large]){
-        console.log('PC');
         this.isMobile.set(false);
       }
       else if(result.breakpoints[Breakpoints.XLarge]){
-        console.log('Extra Large');
         this.isMobile.set(false);
       }
     });

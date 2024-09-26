@@ -38,10 +38,9 @@
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Categoria</mat-label>
-            <mat-select formControlName="categoria">
-              <mat-option>--</mat-option>
-              @for(categoria of [1,2,3]; track $index){
-                <mat-option [value]="'computadores'">Computadores</mat-option>
+            <mat-select formControlName="id_categoria">
+              @for(categoria of categorias(); track categoria){
+                <mat-option [value]="categoria.id_categoria">{{categoria.nombre_categoria}}</mat-option>
               }
             </mat-select>
           </mat-form-field>
