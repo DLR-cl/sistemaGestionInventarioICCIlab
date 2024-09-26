@@ -1,0 +1,61 @@
+<mat-card class="dialog-container">
+  <mat-card-header>
+    <mat-card-title>Crear Recurso</mat-card-title>
+  </mat-card-header>
+  <mat-dialog-content>
+    <mat-grid-list cols="2" rowHeight="100px" gutterSize="20px" >
+      <form [formGroup]="formUpdateRecurso" required>
+        <mat-grid-tile colspan="1">
+          <mat-form-field appearance="outline">
+            <mat-label>ID UTA</mat-label>
+            <input matInput formControlName="id_uta">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+          <mat-form-field appearance="outline">
+            <mat-label>ID DICI</mat-label>
+            <input matInput formControlName="id_dici">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Marca</mat-label>
+            <input matInput formControlName="marca">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Modelo</mat-label>
+            <input matInput formControlName="modelo">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Ubicacion</mat-label>
+            <input matInput formControlName="ubicacion">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="id_categoria">
+              @for(categoria of categorias(); track categoria){
+                <mat-option [value]="categoria.id_categoria">{{categoria.nombre_categoria}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <mat-form-field appearance="outline">
+            <mat-label>Descripcion</mat-label>
+            <input matInput formControlName="descripcion">
+          </mat-form-field>
+        </mat-grid-tile>
+      </form>
+    </mat-grid-list>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button (click)="cerrarDialog()">Cancelar</button>
+    <button mat-flat-button (click)="updateRecurso()" >Crear</button>
+  </mat-dialog-actions>
+</mat-card>

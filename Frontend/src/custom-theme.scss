@@ -79,6 +79,10 @@ html, body {
     color: mat.get-theme-color($dark-theme, on-primary-fixed-variant);
   }
 
+  .primary-color {
+    color: mat.get-theme-color($dark-theme, primary);
+  }
+
   .table-container {
     @include mat.table-color($light-theme);
 
