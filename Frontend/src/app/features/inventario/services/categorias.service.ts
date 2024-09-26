@@ -1,44 +1,52 @@
-import { Injectable } from '@angular/core';
-import { Categoria } from '../interfaces/categoria.interface';
+import { inject, Injectable } from '@angular/core';
+import { Categoria, CrearCategoria, ResponseCategoria } from '../interfaces/categoria.interface';
+import { environment } from '../../../../environments/environments';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriasService {
 
+  private BASE_URL = environment.apiUrl;
+  private httpClient = inject(HttpClient);
   private CATEGORIAS_DATA : Categoria[] = [ 
     {
-      categoria_id: 1,
-      nombre: "Meta Quest",
-      icon: '3d_rotation',
+      id_categoria: 1,
+      nombre_categoria: "Meta Quest",
       fecha_creacion: new Date()
     },
     {
-      categoria_id: 2,
-      nombre: "Computadores",
-      icon: "laptop",
+      id_categoria: 2,
+      nombre_categoria: "Computadores",
       fecha_creacion: new Date()
     },
     {
-      categoria_id: 3,
-      nombre: "Monitores",
-      icon: "desktop_windows",
+      id_categoria: 3,
+      nombre_categoria: "Monitores",
       fecha_creacion: new Date()
     },
     {
-      categoria_id: 4,
-      nombre: "Teclados",
-      icon: "keyboard",
+      id_categoria: 4,
+      nombre_categoria: "Teclados",
       fecha_creacion: new Date()
     }
   ]
 
-  getCategorias() : Categoria[] {
-    return this.CATEGORIAS_DATA
+  getAllCategorias() : Observable<Categoria[]> {
+    return this.httpClient.get<Categoria[]>(`${this.BASE_URL}/categorias`)
   }
 
-  getCategoryByName(nombre: string) : Categoria {
-    return this.CATEGORIAS_DATA.find(categoria => 
-      categoria.nombre === nombre) || { categoria_id: 0, nombre: '', icon: '', fecha_creacion: new Date() } 
-  } 
+  getCategoryById(id_categoria: number) : Observable<Categoria> {
+    return this.httpClient.get<Categoria>(`${this.BASE_URL}/categorias/${id_categoria}`)  
+  }
+
+  createCategoria(categoria: CrearCategoria) : Observable<ResponseCategoria> {
+    return this.httpClient.post<ResponseCategoria>(`${this.BASE_URL}/categorias`, categoria)
+  }
+
+  deleteCategoria(id_categoria: number) : Observable<ResponseCategoria> {
+    return this.httpClient.delete<ResponseCategoria>(`${this.BASE_URL}/categorias/${id_categoria}`)
+  }
 }

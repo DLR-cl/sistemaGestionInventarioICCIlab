@@ -1,0 +1,79 @@
+<div class="gestion-container">
+  <div class="header-container">
+    <mat-card>
+      <h2>Confirmar préstamo</h2>
+    </mat-card>
+  </div>
+  <mat-grid-list 
+    [cols]="isMobile() ? '1' : '2'" 
+    [rowHeight]="isMobile() ? '520px' : '520px'" 
+    gutterSize="40px" 
+    class="grid-container"
+    > 
+    <mat-grid-tile>
+      <mat-grid-list [cols]="'3'"[rowHeight]="isMobile()? '100px':'100px'"  gutterSize="5px"
+      [class.mobile]="isMobile()">
+        <mat-grid-tile colspan="3" rowspan="1"><mat-card class="header"><h2>Datos del solicitante</h2></mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1" rowspan="2">
+          <mat-card class="img-estudiante">
+            <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="">
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="2">
+          <mat-card [class.mobile]="isMobile()">
+            <div class="header"><p>Informacion</p></div>
+            <div class="content">
+              <p><strong [style.margin-right]="'7px'">Nombre:</strong>
+                {{this.estudiante()?.p_nombre}} {{estudiante()?.s_nombre}}
+                {{this.estudiante()?.p_apellido}} {{estudiante()?.m_apellido}}
+              </p> 
+              <p><strong [style.margin-right]="'7px'">Rut:</strong>{{estudiante()?.rut}}</p> 
+              <p><strong [style.margin-right]="'7px'">Correo:</strong>{{estudiante()?.correo}}</p> 
+            </div>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3" rowspan="2">
+          <mat-card class="moreinfo-estudiante">
+            <div class="header"><p>Informacion Adicional</p></div>
+            <div class="content">
+              <p><strong [style.margin-right]="'7px'">Agno&nbsp;Ingreso:</strong>{{estudiante()?.ingreso}}</p>
+              <p><strong [style.margin-right]="'7px'">Estado:</strong>{{estudiante()?.estado_estudiante}}</p> 
+              <p><strong [style.margin-right]="'7px'">Fono:</strong>{{estudiante()?.fono}}</p> 
+              <p><strong [style.margin-right]="'7px'">Direccion:</strong>{{estudiante()?.direccion}}</p> 
+            </div>
+          </mat-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-grid-list [cols]="'3'"[rowHeight]="isMobile()  ? '100px':'100px'" gutterSize="5px" 
+      [class.mobile]="isMobile()">
+      <mat-grid-tile colspan="3" rowspan="1"><mat-card class="header"><h2>Datos del recurso</h2></mat-card></mat-grid-tile>
+      <mat-grid-tile colspan="1" rowspan="2">
+        <mat-card class="recurso-img">
+          <mat-icon>computer</mat-icon>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2" rowspan="2">
+        <mat-card>
+          <div class="header"><p>Informacion</p></div>
+          <div class="content">
+            <p><strong [style.margin-right]="'7px'">ID UTA:</strong>{{recurso()?.id_uta}}</p> 
+            <p><strong [style.margin-right]="'7px'">ID Categoria:</strong>{{recurso()?.id_categoria}}</p> 
+            <p><strong [style.margin-right]="'7px'">Marca:</strong>{{recurso()?.marca}}</p> 
+            <p><strong [style.margin-right]="'7px'">Modelo:</strong>{{recurso()?.modelo}}</p> 
+          </div>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3" rowspan="1"><mat-card class="header"><h2>Confirmar Prestamo</h2></mat-card></mat-grid-tile>
+      <mat-grid-tile colspan="3" rowspan="1">
+        <mat-card class="content recurso-confirm">
+          <button mat-flat-button (click)="onCancelarPrestamo()" class="error-button">Cancelar</button>
+          <button mat-flat-button (click)="onConfirmarPrestamo()">Confimar</button>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+    </mat-grid-tile>
+  </mat-grid-list>  
+</div>

@@ -58,8 +58,8 @@
   border: 1px solid ;
   max-width: 4rem;
   border-radius: 8px;
-  padding-left: 3px;
-  padding-right: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 .table-container .isActive{
@@ -67,6 +67,5 @@
 }
 
 .table-container .isInactive{
-
   color: #D32F2F;
 }
