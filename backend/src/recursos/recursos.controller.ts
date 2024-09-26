@@ -26,7 +26,12 @@ export class RecursosController {
     return await this.recursosService.todosPrestamosRecurso(id);
   }
 
+  @Get('/disponibles_categoria/:id')
+  async findAllRecursosDisponibleByCategoria(@Param('id') id : string){
+    return await this.recursosService.getAllRecursosFromCategoriasActivos(+id);
+  }
 
+  
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.recursosService.findOne(id);

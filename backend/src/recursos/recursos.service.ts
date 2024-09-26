@@ -104,4 +104,19 @@ export class RecursosService {
     }
   }
 
+  async getAllRecursosFromCategoriasActivos(id : number){
+    try {
+      const recursos = await this.databaseService.recurso.findMany({
+        where: {
+          id_categoria: id,
+          estado_recurso: true,
+        }
+      });
+
+      return recursos
+    } catch (error){
+      throw new HttpException('Error al obtener todos los recursos activos de categoria', HttpStatus.BAD_REQUEST);
+    }
+  }
+
 }
