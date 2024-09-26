@@ -1,0 +1,17 @@
+<mat-card class="dialog-container">
+  <mat-card-header>
+    <mat-card-title>Borrar Recurso</mat-card-title>
+  </mat-card-header>
+  <mat-dialog-content>
+    <mat-card-content>
+      <p>
+        Esta seguro que desea borrar el recurso con ID UTA: <span class="primary-color ">{{data.id_uta}}</span> ?
+      </p>
+    </mat-card-content>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button (click)="cerrarDialog()">Cancelar</button>
+    <button mat-flat-button (click)="borrarRecurso()">Eliminar</button>
+  </mat-dialog-actions>
+</mat-card>
+

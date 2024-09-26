@@ -41,7 +41,12 @@ export class SidenavAdminComponent {
 
   public menuItems : MenuItem[] = [ 
     { icon: 'dashboard', route:'', name: 'Inicio'}, 
-    { icon: 'cached', route: '/prestamos', name: 'Prestamos',},
+    { icon: 'cached', name: 'Prestamos', 
+      subitems: [
+        { icon: 'add', route: 'prestamos', name: 'Gestion'},
+        { icon: 'done', route: 'prestamos/seguimiento', name: 'Seguimiento'},
+      ],
+    },
     { icon: 'inventory', name: 'Inventario', 
       subitems: [
         { icon: 'computer', route: 'inventario/recursos', name: 'Recursos'},
@@ -50,7 +55,7 @@ export class SidenavAdminComponent {
       ]
     },
     { icon: 'report', route: '/advertencias', name: 'Advertencias',},
-    { icon: 'supervisor_account', route: '/ayudantes', name: 'Ayudantes',},
+    { icon: 'supervisor_account', route: '/usuarios', name: 'Usuarios',},
   ]
 
   onLinkClick(name: string): void {

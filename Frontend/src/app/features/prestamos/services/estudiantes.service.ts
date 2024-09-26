@@ -1,24 +1,22 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Estudiante } from '../interfaces/estudiante.interface';
+import { environment } from '../../../../environments/environments';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstudiantesService {
 
-  private ESTUDIANTES_DATA: Estudiante[] = [
-    { rut: 11, nombre: 'Eduardo', apellido: 'Perez', carrera: 'Ingenieria en Sistemas' },
-    { rut: 22, nombre: 'Maria', apellido: 'Gonzalez', carrera: 'Ingenieria en Sistemas' },
-    { rut: 33, nombre: 'Pedro', apellido: 'Rodriguez', carrera: 'Ingenieria en Sistemas' },
-    { rut: 44, nombre: 'Ana', apellido: 'Garcia', carrera: 'Ingenieria en Sistemas' },
-    { rut: 55, nombre: 'Carlos', apellido: 'Martinez', carrera: 'Ingenieria en Sistemas' },
-  ]
+  private BASE_URL = environment.apiUrl;
+  private httpClient = inject(HttpClient);
 
-  getEstudiantes(): Estudiante[] {
-    return this.ESTUDIANTES_DATA;
+  getAllEstudiantes(): Observable<Estudiante[]> {
+    return this.httpClient.get<Estudiante[]>(`${this.BASE_URL}/estudiantes`);
   }
 
-  getEstudianteById(rut: number): Estudiante {
-    return this.ESTUDIANTES_DATA.find(estudiante => estudiante.rut === rut) || { rut: 0, nombre: '', apellido: '', carrera: '' };
+  getEstudianteByRut(rut: string): Observable<Estudiante> {
+    return this.httpClient.get<Estudiante>(`${this.BASE_URL}/estudiantes/${rut}`);
   }
 }

@@ -20,41 +20,32 @@ export const routes: Routes = [
           {
             path: '', loadComponent: () => import('./features/inicio/inicio.component')
           },
-          
           {
-            path: 'prestamos', loadComponent: () => import('./features/prestamos/pages/inicio/inicio.component'),
+            path: 'prestamos/seguimiento', loadComponent: () => import('./features/prestamos/pages/seguimiento/seguimiento.component'),
           },
           {
-            path: 'prestamos/:categoria', loadComponent: () => import('./features/prestamos/pages/recursos/recursos.component')
+            path: 'prestamos', loadComponent: () => import('./features/prestamos/pages/select-category/inicio.component'),
           },
           {
-            path: 'prestamos/:categoria/:recurso', loadComponent: () => import('./features/prestamos/pages/gestion-prestamo/gestion-prestamo.component')
+            path: 'prestamos/prestar/:categoria', loadComponent: () => import('./features/prestamos/pages/prestar/select-recurso/recursos.component')
           },
           {
-            path: 'prestamos/:categoria/:recurso/:estudiante', loadComponent: () => import('./features/prestamos/pages/confirmar-prestamo/confirmar-prestamo.component')
+            path: 'prestamos/:categoria/prestar/:recurso', loadComponent: () => import('./features/prestamos/pages/prestar/scan-qr/gestion-prestamo.component')
           },
           {
-            path: 'inventario', loadComponent: () => import('./features/inventario/inventario.component'),
+            path: 'prestamos/:categoria/prestar/:recurso/:estudiante', loadComponent: () => import('./features/prestamos/pages/prestar/confirmar-prestamo/confirmar-prestamo.component')
+          },
+          // {
+          //   path: 'prestamos/:categoria/devolver',
+          // },
+          { 
+            path: 'inventario/recursos', loadComponent: () => import('./features/inventario/pages/gestion-recursos/recursos.component') 
           },
           { 
-            path: 'inventario/recursos', loadComponent: () => import('./features/inventario/pages/recursos/recursos.component') 
+            path: 'inventario/categorias', loadComponent: () => import('./features/inventario/pages/gestion-categorias/categorias.component') 
           },
           { 
-            path: 'inventario/categorias', loadComponent: () => import('./features/inventario/pages/categorias/categorias.component') 
-          },
-          { 
-            path: 'ayudantes', loadComponent: () => import('./features/ayudantes/pages/ayudantes/ayudantes.component') 
-          },
-          {
-            path: 'advertencias', loadComponent: () => import('./features/inventario/inventario.component')
-          },
-        ],
-      },
-      {
-        path: '', canActivate : [],//Guard Admin
-        children: [
-          {
-            path: 'ayudantes', loadComponent: () => import('./features/inventario/inventario.component')
+            path: 'usuarios', loadComponent: () => import('./features/usuarios/pages/usuario/usuarios.component') 
           }
         ],
       },
