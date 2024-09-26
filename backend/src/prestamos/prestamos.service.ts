@@ -47,7 +47,16 @@ export class PrestamosService {
   }
 
   async findAll() {
-    return await this.databaseService.prestamo.findMany();
+    try {
+
+      return await this.databaseService.prestamo.findMany({
+        include: {
+          recursos : true
+        }
+      });
+    } catch (error) {
+      throw new HttpException('Error al obtener todos los prestamos', HttpStatus.BAD_REQUEST);
+    }
   }
 
   async findOne(id: number) {
@@ -140,7 +149,10 @@ export class PrestamosService {
         where : {
           fecha_fin : {
             not : null,
-          }
+          },
+        },
+        include : {
+          recursos : true,
         }
       });
 
@@ -150,8 +162,6 @@ export class PrestamosService {
       throw new HttpException('Error al obtener todos los prestamos inactivos', HttpStatus.BAD_REQUEST);
     }
    }
-
-
 
 
 
