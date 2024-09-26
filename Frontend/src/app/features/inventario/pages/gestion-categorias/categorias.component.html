@@ -1,0 +1,54 @@
+<div class="header-container mat-elevation-z2">
+  <mat-card>
+    <div class="header-left">
+      <mat-icon>category</mat-icon>
+      <mat-card-title>Categorias</mat-card-title>
+    </div>
+    <div class="header-right">
+      <button mat-flat-button>Agregar Categoria</button>
+    </div>
+  </mat-card>
+</div>
+
+<div class="table-container">
+  <table mat-table [dataSource]="categoriasData()" class="mat-elevation-z3">
+
+    <ng-container matColumnDef="categoria_id">
+      <th mat-header-cell *matHeaderCellDef> categoria_id </th>
+      <td mat-cell *matCellDef="let element"> {{element.categoria_id}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha_creacion">
+      <th mat-header-cell *matHeaderCellDef>Fecha de creacion</th>
+      <td mat-cell *matCellDef="let element"> {{element.fecha_creacion | date:'dd/MM/yyyy - HH:mm:ss' }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="icon">
+      <th mat-header-cell *matHeaderCellDef> icon </th>
+      <td mat-cell *matCellDef="let element"> {{element.icon}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Accciones   </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button class="btn-view" >
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-icon-button class="btn-edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button class="btn-delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>   
+</div>

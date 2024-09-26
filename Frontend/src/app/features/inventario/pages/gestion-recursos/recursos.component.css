@@ -1,0 +1,72 @@
+.header-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+
+}
+.header-container mat-card{
+  border-radius: 8px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  width: 100%;
+}
+.header-container .header-left{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 1.5rem;
+}
+
+.header-container .header-left mat-card-title{ 
+  margin-left: 1rem;
+}
+
+.header-container .header-right button{ 
+  border-radius: 8px;
+}
+
+.table-container{
+  max-width: 100%;
+  overflow: auto;
+}
+
+.table-container table{
+  width: 100%;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  white-space: nowrap;
+}
+
+.table-container table th{
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.table-container table td{
+  padding: 0.5rem;
+}
+
+.border-state{
+  text-align: center;
+  border: 1px solid ;
+  max-width: 4rem;
+  border-radius: 8px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.table-container .isActive{
+  color: rgb(37, 167, 37);
+}
+
+.table-container .isInactive{
+
+  color: #D32F2F;
+}

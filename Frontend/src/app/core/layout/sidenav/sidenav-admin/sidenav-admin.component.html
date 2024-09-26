@@ -1,0 +1,38 @@
+<mat-nav-list>
+  @for (menuItem of menuItems; track menuItem) {
+    <a
+    mat-list-item
+    [routerLink]="menuItem.route"
+    [routerLinkActiveOptions]="{exact: true}"
+    routerLinkActive="selected-menu-item"
+    #rla="routerLinkActive"
+    [activated]="rla.isActive"
+    (click)="onLinkClick(menuItem.name)"
+    >
+    <mat-icon matListItemIcon>{{menuItem.icon}}</mat-icon>
+    <div matListItemTitle>{{menuItem.name}}</div>
+    @if(menuItem.subitems?.length){
+      <div matListItemMeta class="display-sub-item"><mat-icon matListItemIcon>keyboard_arrow_down</mat-icon></div>
+    }
+    </a>
+    @if(menuItem.subitems?.length && clickItem().display && clickItem().name === menuItem.name) {
+      <mat-nav-list class="subitem"
+      @expandMenu 
+      [style.padding]="'0'">
+        @for (subitem of menuItem.subitems; track $index) {
+          <a
+          mat-list-item
+          [routerLink]="subitem.route"
+          [routerLinkActiveOptions]="{exact: true}"
+          routerLinkActive="selected-menu-item"
+          #rla="routerLinkActive"
+          [activated]="rla.isActive"
+          >
+          <mat-icon matListItemIcon>{{subitem.icon}}</mat-icon>
+          <span matListItemTitle>{{subitem.name}}</span>
+          </a>
+        }
+      </mat-nav-list>
+    }
+  }
+</mat-nav-list>

@@ -6,44 +6,103 @@ $dark-theme: mat.define-theme(
   (
     color: (
       theme-type: dark,
-      primary: mat.$azure-palette
+      primary: mat.$blue-palette,
     )
   )
 );
+
 
 $light-theme: mat.define-theme(
   (
     color: (
       theme-type: light,
-      primary: mat.$azure-palette,
+      primary: mat.$blue-palette,
+    )
+  )
+);
+
+$cyan-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$cyan-palette,
+    )
+  )
+);
+
+$green-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$green-palette,
+    )
+  )
+);
+
+$yellow-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: mat.$yellow-palette,
     )
   )
 );
 
 html {
-  // Apply the dark theme by default
+
+  @include mat.core-theme($dark-theme);
   @include mat.all-component-themes($dark-theme);
+  
+  .error-button {
+    @include mat.button-color($light-theme, $color-variant: error);
+  }
 
   .in-light-theme {
     @include mat.all-component-colors($light-theme);
-
   }
- 
+                                           
 }
 
 html, body { 
   height: 100%;
-  color: mat.get-theme-color($light-theme, surface);
 
- .in-light-theme {
+  .toolbar-light {
+    background-color: mat.get-theme-color($light-theme, background);
     color: mat.get-theme-color($dark-theme, surface);
+  }
+
+  .background-light{
     background-color: mat.get-theme-color($light-theme, background);
   }
 
-  .in-dark-theme {
-    color: mat.get-theme-color($light-theme, surface);
-    background-color: mat.get-theme-color($dark-theme, background);
+  .title{
+    color: mat.get-theme-color($dark-theme, on-primary-fixed-variant);
+  }
+
+  .table-container {
+    @include mat.table-color($light-theme);
+
+    thead tr{
+      background-color: mat.get-theme-color($dark-theme, primary);
+    }
+  }
+
+  .dialog-container {
+    @include mat.dialog-color($dark-theme);
+    color: mat.get-theme-color($dark-theme, primary);
+  }
+
+  .btn-view {
+    @include mat.icon-button-color($cyan-theme, $color-variant: primary);
+  }
+
+  .btn-edit {
+    @include mat.icon-button-color($yellow-theme, $color-variant: primary);
+  }
+
+  .btn-delete {
+    @include mat.icon-button-color($cyan-theme, $color-variant: error);
   }
 }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", "Nerko One", sans-serif;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", "Nerko One","Quicksand", sans-serif;}
 
