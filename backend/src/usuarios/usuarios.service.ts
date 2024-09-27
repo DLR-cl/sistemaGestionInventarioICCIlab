@@ -139,7 +139,7 @@ export class UsuariosService {
       };
 
       // remover usuario
-      const removeUser = this.databaseService.usuario.delete({
+      const removeUser = await this.databaseService.usuario.delete({
         where : {id_usuario : id_usuario}
       })
 
