@@ -17,6 +17,16 @@ export class PrestamosService {
 
       // al crear el recurso se crea el prestamo generico  y se actualiza el estado del recurso
 
+      const findEstado = await this.databaseService.recurso.findUnique({
+        where : {
+          id_uta : createPrestamo.id_uta,
+        }
+      });
+
+      if(!findEstado.estado_recurso){
+        throw new HttpException('El recurso ya está siendo utilizado', HttpStatus.BAD_REQUEST);
+      };
+      
       const nuevoPrestamo = await this.databaseService.prestamo.create(
         {
           data : {
