@@ -24,8 +24,6 @@ export default class InicioComponent implements OnInit {
   public isMobile = signal(false);
   public categorias = signal<Categoria[]>([]);
 
-
-
   ngOnInit(): void {
     this.breakpointUpdate();
     this.setCategoria();
@@ -66,12 +64,14 @@ export default class InicioComponent implements OnInit {
 
   setCategoria(){
     this.categoriasService.getAllCategorias().subscribe((res) => {
-      console.log(res);
       this.categorias.set(res);
     });
   }
   onPrestar(id_categoria : number){
-    console.log('Prestar', id_categoria);
     this.router.navigate([`/prestamos/prestar/${id_categoria}`]);
+  }
+
+  onDevolver(id_categoria : number){
+    this.router.navigate([`/prestamos/devolver/${id_categoria}`]);
   }
 }

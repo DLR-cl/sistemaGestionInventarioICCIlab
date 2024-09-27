@@ -8,7 +8,7 @@
         <div class="categoria-content">
           <mat-card-title>{{categoria.nombre_categoria}}</mat-card-title>
           <button mat-flat-button (click)="onPrestar(categoria.id_categoria)">Prestar</button>
-          <button mat-flat-button>Devolver</button>
+          <button mat-flat-button (click)="onDevolver(categoria.id_categoria)" >Devolver</button>
         </div>
       </mat-card>
     </mat-grid-tile>

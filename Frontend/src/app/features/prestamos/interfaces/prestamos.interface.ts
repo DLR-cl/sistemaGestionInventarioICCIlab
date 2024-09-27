@@ -8,3 +8,9 @@ export interface PrestamoData {
   fecha_fin: Date;
   id_uta: Date;
 }
+
+export interface ResponsePrestamo {
+  statusCode: number;
+  message: string;
+  data: string;  
+}

@@ -35,9 +35,9 @@ export const routes: Routes = [
           {
             path: 'prestamos/:categoria/prestar/:recurso/:estudiante', loadComponent: () => import('./features/prestamos/pages/prestar/confirmar-prestamo/confirmar-prestamo.component')
           },
-          // {
-          //   path: 'prestamos/:categoria/devolver',
-          // },
+          {
+             path: 'prestamos/devolver/:categoria', loadComponent: () => import('./features/prestamos/pages/devolver/select-recurso/select-recurso.component')
+          },
           { 
             path: 'inventario/recursos', loadComponent: () => import('./features/inventario/pages/gestion-recursos/recursos.component') 
           },

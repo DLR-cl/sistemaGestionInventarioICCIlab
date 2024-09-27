@@ -37,21 +37,22 @@ export default class ConfirmarPrestamoComponent implements OnInit {
     this.breakpointUpdate();
     this.setEstudianteById();
     this.setRecursoById();
-    if(!this.estudiante()){
-      this.router.navigate(['/**']);
-    }
   }
 
-  setEstudianteById(): void {
+  setEstudianteById() {
     const rut = (this.activeRouter.snapshot.params['estudiante']);
     this.estudiantesService.getEstudianteByRut(rut).subscribe((res) => {
       this.estudiante.set(res);
+      if(!this.estudiante()){
+        this.router.navigate(['/**']);
+      }
     });
   }
 
-  setRecursoById(): void {
+  setRecursoById() {
     const recurso = this.activeRouter.snapshot.params['recurso'];
     this.recursoSerice.getRecursoById(recurso).subscribe((res) => {
+      console.log(res);
       this.recurso.set(res);
     });
   }
@@ -67,36 +68,35 @@ export default class ConfirmarPrestamoComponent implements OnInit {
     ])
     .subscribe((result) => {
       if(result.breakpoints[Breakpoints.XSmall] ){
-        console.log('MOBILE');
         this.isMobile.set(true);
       }
       else if(result.breakpoints[Breakpoints.Small]){
-        console.log('Tablet');
         this.isMobile.set(true);
 
       }else if(result.breakpoints[Breakpoints.Medium]){
-        console.log('Tablet');
         this.isMobile.set(true);
         
       }else if(result.breakpoints[Breakpoints.Large]){
-        console.log('PC');
         this.isMobile.set(false);
       }
       else if(result.breakpoints[Breakpoints.XLarge]){
-        console.log('PC');
         this.isMobile.set(false);
       }
     });
   };
 
-  onConfirmarPrestamo(){
-    this.prestamosService.realizarPrestamo(this.recurso()?.id_uta!).subscribe((res) => {
-      console.log(res);
-      this.regular.realizarPrestamoRegular(res.id_recurso).subscribe((res) => {
+  onConfirmarPrestamo(): void {
+    const recurso = this.recurso();
+    if (recurso) {
+      console.log(recurso.id_uta);
+      this.prestamosService.realizarPrestamo(recurso.id_uta).subscribe((res) => {
+        this.router.navigate(['/prestamos'])
       });
-    });
-    this.router.navigate(['/prestamos'])
+    } else {
+      console.error('Recurso no disponible');
+    }
   }
+  
 
   onCancelarPrestamo(){
     this.router.navigate(['/prestamos'])

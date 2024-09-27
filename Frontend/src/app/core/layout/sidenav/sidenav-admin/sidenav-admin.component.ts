@@ -62,15 +62,9 @@ export class SidenavAdminComponent {
     console.log('click', name); 
     if(this.clickItem().name === name){
       this.clickItem.set({name: name, display: !this.clickItem().display});
-      console.log(this.clickItem());
     }
     else{
       this.clickItem.set({name: name, display: true});
-      console.log(this.clickItem());
     }
-
-    // if(this.isMobile()){
-    //   this.toogleSidenav.emit();
-    // }
   }
 }
