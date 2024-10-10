@@ -14,10 +14,7 @@ export class EstudiantesService {
       console.log('hola');
       const nuevoEstudiante  = await this.databaseService.estudiante.create({
         data : {
-          p_nombre : createEstudiante.p_nombre,
-          s_nombre : createEstudiante.s_nombre,
-          p_apellido : createEstudiante.p_apellido,
-          m_apellido : createEstudiante.m_apellido,
+          nombre : createEstudiante.nombre,
           rut : createEstudiante.rut,
           fono: createEstudiante.fono,
           correo : createEstudiante.correo,

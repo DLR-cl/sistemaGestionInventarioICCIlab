@@ -1,14 +1,16 @@
+import { prestamo } from "@prisma/client";
+
 export class RecursoEntity {
 
-    icci_id: number;
-    id_uta: number;
     nombre: string;
-    estado: boolean;
-    disponibilidad: boolean;
+    marca?: string;
+    descripcion?: string;
+    fecha_ingreso?: Date;
     modelo: string;
-    marca: string;
-    descripcion: string;
-    lugar: string;
-    category_id: number;
+    estado_recurso: boolean;
+    id_categoria: number;
+    id_dici: string;
+    id_uta?: string;
+    ubicacion?: string;
 
 }

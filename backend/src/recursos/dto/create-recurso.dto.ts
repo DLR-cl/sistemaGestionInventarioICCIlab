@@ -24,7 +24,7 @@ export class CreateRecursoDto {
 
   @IsOptional()
   @IsString()
-  id_dici?: string;
+  id_dici: string;
 
   @IsString()
   id_uta: string;

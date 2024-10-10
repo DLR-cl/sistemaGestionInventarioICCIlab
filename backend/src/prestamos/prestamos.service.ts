@@ -19,7 +19,7 @@ export class PrestamosService {
 
       const findEstado = await this.databaseService.recurso.findUnique({
         where : {
-          id_uta : createPrestamo.id_uta,
+          id_dici : createPrestamo.id_dici,
         }
       });
 
@@ -27,17 +27,17 @@ export class PrestamosService {
         throw new HttpException('El recurso ya está siendo utilizado', HttpStatus.BAD_REQUEST);
       };
       
-      const nuevoPrestamo = await this.databaseService.prestamo.create(
+      const nuevoPrestamo: prestamo = await this.databaseService.prestamo.create(
         {
           data : {
             fecha_inicio : new Date(),
-            id_uta : createPrestamo.id_uta,
+            id_dici: createPrestamo.id_dici,
           }
         }
       )
       // actualizar estado del recuro
       const actualizarEstado = await this.databaseService.recurso.update({
-        where : {id_uta : createPrestamo.id_uta},
+        where : {id_dici : createPrestamo.id_dici},
         data : {
           estado_recurso : false,
         }
@@ -45,10 +45,10 @@ export class PrestamosService {
 
     
      
-      const response : ResponseDto<CreatePrestamoDto> = {
+      const response : ResponseDto<prestamo> = {
         statusCode : HttpStatus.CREATED,
         message : 'Prestamo creado con exito',
-        data : createPrestamo,
+        data : nuevoPrestamo,
       }
       return response;
     } catch(error){
@@ -59,11 +59,14 @@ export class PrestamosService {
   async findAll() {
     try {
 
-      return await this.databaseService.prestamo.findMany({
+      const prestamos = await this.databaseService.prestamo.findMany({
         include: {
           recursos : true
         }
       });
+
+      return prestamos; 
+   
     } catch (error) {
       throw new HttpException('Error al obtener todos los prestamos', HttpStatus.BAD_REQUEST);
     }
@@ -87,15 +90,24 @@ export class PrestamosService {
   async finalizarPrestamo(id_prestam : number) {
     try {
       console.log('check')
+
+      const findPrestamo = await this.databaseService.prestamo.findUnique({
+        where : {id_prestamo  : id_prestam},
+      })
+
+      if(!findPrestamo){
+        throw new HttpException('Error, no existe el préstamo', HttpStatus.BAD_REQUEST);
+      }
+
       const finalizarPrestamo = await this.databaseService.prestamo.update({
         where : {id_prestamo : id_prestam},
         data : {fecha_fin : new Date()}
       });
       console.log('check 2')
-
+      
       const cambiarEstadoRecurso = await this.databaseService.recurso.update({
         where: {
-          id_uta : finalizarPrestamo.id_uta
+          id_dici : finalizarPrestamo.id_dici
         },
         data : {
           estado_recurso : true,
@@ -138,7 +150,6 @@ export class PrestamosService {
 
    async findActivos() : Promise<prestamo[]>{
      try {
-       console.log('hola');
        const prestamosActivos  = await this.databaseService.prestamo.findMany({
          where : {
            fecha_fin : null,

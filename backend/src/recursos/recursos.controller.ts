@@ -13,7 +13,6 @@ export class RecursosController {
   async create(@Body() createRecurso: CreateRecursoDto) : Promise<ResponseDto<CreateRecursoDto>>{
     const newRecurso = await this.recursosService.create(createRecurso)
     return newRecurso;
-  
   }
 
   @Get()

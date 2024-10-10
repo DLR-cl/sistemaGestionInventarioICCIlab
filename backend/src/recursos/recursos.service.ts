@@ -36,7 +36,7 @@ export class RecursosService {
   async findOne(id: string) : Promise<recurso>{
     return await this.databaseService.recurso.findUnique({
       where : {
-        id_uta: id
+        id_dici: id
       }
     })
   }
@@ -44,7 +44,7 @@ export class RecursosService {
   async update(id: string, updateRecurso: UpdateRecursoDto) : Promise<ResponseDto<recurso>>{
       try {
         const actRecurso = await this.databaseService.recurso.update({
-          where : {id_uta : id},
+          where : {id_dici : id},
           data : updateRecurso      
         }) 
 
@@ -65,18 +65,15 @@ export class RecursosService {
    try {
 
     if(!await this.databaseService.recurso.findUnique({
-      where : {
-        id_uta : id,
-      }
-    })){
+      where : { id_dici : id,}
+    })) {
       throw new HttpException('Recurso a eliminar no existe', HttpStatus.BAD_REQUEST);
     }
 
     const deleteRecurso = await this.databaseService.recurso.delete({
-      where : {id_uta : id},
+      where : {id_dici : id},
     });
   
-
     const response : ResponseDto<recurso> = {
       statusCode : HttpStatus.OK,
       message : 'Recurso borrado con exito',
@@ -86,15 +83,14 @@ export class RecursosService {
   } catch(error) {
     throw new HttpException('Error, no se pudo borrar el recurso', HttpStatus.BAD_REQUEST)
   }
-
-  }
+}
 
   // devuelve todos los prestamos en los que aparece el recurso
   async todosPrestamosRecurso(id_uta : string) : Promise<prestamo[]>{
     try {
       const todosPrestamos = await this.databaseService.prestamo.findMany({
         where:{
-          id_uta: id_uta,
+          id_dici: id_uta,
         }
       });
 

@@ -15,7 +15,20 @@ export class CategoriasService {
 
   async create(createCategoria: CreateCategoriaDto) : Promise<ResponseDto<categoria>> {
     try {
+
+      // encontrar categoria creada
+      const categoriaName: string = createCategoria.nombre_categoria.toLowerCase()
       
+      const findCategoria = await this.databaseService.categoria.findUnique({
+        where : { nombre_categoria: categoriaName},
+      });
+
+
+      if(!findCategoria){
+        throw new HttpException('La categoría ya existe', HttpStatus.BAD_REQUEST);
+      }
+
+
       const newcategoria = await this.databaseService.categoria.create({
         data : {
           fecha_creacion : createCategoria.fecha_creacion,
@@ -28,11 +41,11 @@ export class CategoriasService {
         message : 'Categoria creada con exito',
         data: newcategoria
       }
+      
       return response
     }catch(error){
       throw new HttpException('Error al crear la categoria', HttpStatus.BAD_REQUEST)
     } 
-
   }
 
   async findAll() : Promise<categoria[]>{
@@ -44,13 +57,25 @@ export class CategoriasService {
     
   }
 
+  async getAllRecursoByCategoria(id: number): Promise<recurso[]>{
+    try {
+      const findCategoria = await this.databaseService.categoria.findUnique({
+        where : { id_categoria: id },
+        include: { recurso: true }
+      });
+
+      const recursos : recurso[] = findCategoria.recurso;
+      return  recursos;
+    } catch(error){
+      throw new HttpException('Error al obtener los recursos según categoria', HttpStatus.BAD_REQUEST);
+    }
+  }
+
   async findOne(id: number) : Promise<categoria> {
     try{
       return await this.databaseService.categoria.findUnique({
-        where : {
-          id_categoria: id,
-        }
-      })
+        where : {id_categoria: id}
+      });
     } catch(error){
       throw new HttpException('Error al mostrar la categoria', HttpStatus.BAD_REQUEST);
     }
@@ -107,22 +132,5 @@ export class CategoriasService {
     }
   }
 
-  async getAllRecursoByCategoria(id: number): Promise<recurso[]>{
-    try {
-      const findCategoria = await this.databaseService.categoria.findUnique({
-        where : {
-          id_categoria: id,
-        },
-        include: {
-          recurso: true,
-        }
-      });
-
-
-      const recursos : recurso[] = findCategoria.recurso;
-      return  recursos;
-    } catch(error){
-      throw new HttpException('Error al obtener los recursos según categoria', HttpStatus.BAD_REQUEST);
-    }
-  }
+ 
 }

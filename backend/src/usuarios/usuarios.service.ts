@@ -17,41 +17,26 @@ export class UsuariosService {
   async create(createUsuario: CreateUsuarioDto) : Promise<ResponseDto<usuario>>{
     try {
       const usuario = await this.databaseService.usuario.create(
-        {
-          data: {
-            nombre: createUsuario.nombre,
-            usuario: createUsuario.usuario,
-            apellido: createUsuario.apellido,
-            correo: createUsuario.correo,
-            password: createUsuario.password,
-            rut: createUsuario.rut,
-          },
-        }
+        {  data: createUsuario }
       );
 
       if(createUsuario.rol == TiposUsuario.administrador){
         await this.databaseService.admin.create({
-          data: {
-            id_usuario : usuario.id_usuario,
-          }
+          data: { id_usuario : usuario.id_usuario   }
         })
       }else if(createUsuario.rol == TiposUsuario.ayudante){
         await this.databaseService.ayudante.create({
-          data: {
-            id_usuario: usuario.id_usuario,
-          }
+          data: { id_usuario: usuario.id_usuario    }
         })
       } else{
         throw new HttpException('Rol no válido', HttpStatus.BAD_REQUEST);
       }
-
 
       const response : ResponseDto<usuario> = {
         statusCode : HttpStatus.CREATED,
         message: 'Usuario creado con exito',
         data : usuario,
       };
-
 
       return response;
 
@@ -61,9 +46,9 @@ export class UsuariosService {
   }
 
 
-  findAll() {
+  async findAll() {
     try {
-      return this.databaseService.usuario.findMany();
+      return await this.databaseService.usuario.findMany();
     }catch(error){
       throw new HttpException('Error al cargar todos los usuarios', HttpStatus.BAD_REQUEST);
     }
@@ -106,33 +91,22 @@ export class UsuariosService {
 
   async remove(id_usuario: number) {
     try {
-      
       const findUser = await this.databaseService.usuario.findUnique({
-        where: {
-          id_usuario : id_usuario,
-        }
-      })
+        where: { id_usuario : id_usuario }
+      });
 
       // Borrar usuario si es ayudante o administrador
       if (await this.databaseService.admin.findUnique({
-        where: {
-          id_usuario : findUser.id_usuario,
-        }
+        where: { id_usuario : findUser.id_usuario }
       })){
         this.databaseService.admin.delete({
-          where : {
-            id_usuario : findUser.id_usuario,
-          }
+          where : { id_usuario : findUser.id_usuario }
         })
       }else if(await this.databaseService.ayudante.findUnique({
-        where : {
-          id_usuario : findUser.id_usuario,
-        }
+        where : { id_usuario : findUser.id_usuario }
       })){
         this.databaseService.ayudante.delete({
-          where : {
-            id_usuario : findUser.id_usuario,
-          }
+          where : { id_usuario : findUser.id_usuario }
         })
       }else{
         throw new HttpException('Error, usuario no existe', HttpStatus.BAD_REQUEST);
@@ -143,7 +117,6 @@ export class UsuariosService {
         where : {id_usuario : id_usuario}
       })
 
-      
       const response = {
         statusCode : HttpStatus.OK,
         message : 'Usuario eliminado con exito',

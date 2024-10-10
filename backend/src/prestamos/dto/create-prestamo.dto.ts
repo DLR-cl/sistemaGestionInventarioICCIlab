@@ -1,10 +1,17 @@
-import { IsDate, IsEnum, isNotEmpty, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDate, IsEnum, isNotEmpty, IsNotEmpty, isNumber, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreatePrestamoDto {
 
+
     @IsNotEmpty()
     @IsString()
-    id_uta : string;
+    id_dici: string;
 
+    @IsNotEmpty()
+    @IsDate()
+    fecha_inicio: Date;
 
+    @IsOptional()
+    @IsDate()
+    fecha_fin?: Date;    
 }

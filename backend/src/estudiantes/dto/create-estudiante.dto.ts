@@ -7,20 +7,9 @@ export class CreateEstudianteDto {
     rut : string
     
     @IsString()
-    @IsOptional()
-    p_nombre : string
-    
-    @IsString()
-    @IsOptional()
-    p_apellido : string
-  
-    @IsString()
-    @IsOptional()
-    m_apellido : string
+    @IsNotEmpty()
+    nombre : string
 
-    @IsString()
-    @IsOptional()
-    s_nombre : string
 
     @IsString()
     @IsNotEmpty()

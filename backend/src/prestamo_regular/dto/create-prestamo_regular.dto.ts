@@ -1,11 +1,11 @@
-import { isNotEmpty, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsDate, isNotEmpty, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 
 export class CreatePrestamoRegularDto {
 
-    @IsString()
+    @IsDate()
     @IsNotEmpty()
-    hora_inicio : string;
+    hora_inicio : Date;
 
     @IsNumber()
     @IsNotEmpty()
