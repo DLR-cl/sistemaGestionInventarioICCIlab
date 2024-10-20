@@ -46,8 +46,8 @@ model regular {
   hora_inicio DateTime     @db.Date
   hora_fin    DateTime?     @db.Date
   id_prestamo Int         @id
-  rut         String?     @db.VarChar(12)
-  id_usuario  Int?
+  rut         String     @db.VarChar(12)
+  id_usuario  Int
   prestamo    prestamo    @relation(fields: [id_prestamo], references: [id_prestamo], onDelete: NoAction, onUpdate: NoAction, map: "regular_ibfk_1")
   Estudiante  estudiante? @relation(fields: [rut], references: [rut], onDelete: NoAction, onUpdate: NoAction, map: "regular_ibfk_2")
   ayudante    ayudante?   @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "regular_ibfk_3")

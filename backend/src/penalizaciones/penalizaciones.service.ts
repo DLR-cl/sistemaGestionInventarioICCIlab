@@ -1,11 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreatePenalizacioneDto } from './dto/create-penalizacione.dto';
 import { UpdatePenalizacioneDto } from './dto/update-penalizacione.dto';
+import { Penalizacione } from './entities/penalizacione.entity';
+import { DatabaseService } from 'src/database/database/database.service';
+import { sanciones } from '@prisma/client';
 
 @Injectable()
 export class PenalizacionesService {
-  create(createPenalizacioneDto: CreatePenalizacioneDto) {
-    return 'This action adds a new penalizacione';
+
+  constructor(private readonly databaseService : DatabaseService){}
+  create(createPenalizacioneDto: sanciones) {
+    try{
+      this.databaseService.sanciones.create({data : createPenalizacioneDto })
+
+    }catch(error){
+      throw new HttpException('Error al crear la sancion', HttpStatus.BAD_REQUEST);
+    }
   }
 
   findAll() {
